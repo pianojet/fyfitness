@@ -1,0 +1,90 @@
+{% extends "public_site/home.html" %}
+{% load stupid_height %}
+{% block title %}{% endblock %}
+
+{% block script %}
+<script>
+$(function() {
+	$('#id_goal_other_type').attr("disabled", "disabled").fadeTo('slow', 0.2);
+	$('#id_goal_other_unit_type').attr("disabled", "disabled").fadeTo('slow', 0.2);
+
+
+	$("#id_goal_type").change(function(){
+		if ($(this).val() != "Other")
+			$('#id_goal_other_type').attr("disabled", "disabled").fadeTo('slow', 0.2);
+		else
+			$('#id_goal_other_type').attr("disabled", "").fadeTo('slow', 1);
+	});
+
+
+	$("#id_goal_unit_type").change(function(){
+		if ($(this).val() != "Other")
+			$('#id_goal_other_unit_type').attr("disabled", "disabled").fadeTo('slow', 0.2);
+		else
+			$('#id_goal_other_unit_type').attr("disabled", "").fadeTo('slow', 1);
+	});
+
+
+
+
+
+	//document.getElementById('goal_type').getElementsByTagName('option')[3];
+	//alert(goal_type_option);
+
+});
+</script>
+
+{% endblock %}
+
+{% block headstuff %}
+	<link href="{{STATIC_URL}}/membership/css/profile.css" rel="stylesheet" type="text/css" media="screen" />
+{% endblock %}
+
+{% block helpdiv %}
+<div id="helpButton" class="my-ui-corner-all">Help...</div>
+<div id="helpDiv" class="my-ui-corner-all">
+	<p>As a member of Find Your Fitness, you need to specify a fitness goal that you would like to achieve.</p>
+	<p>The current deadline for the community to reach their fitness goals is <strong>December 9th, 2010</strong>.  You can edit your goal within 2 weeks of creating it, but you cannot change the goal's type once you've logged progress.</p><br />
+	<p>For some basic and general information about figuring out a goal you would like to work towards, here are a couple links:</p><br />
+	<p><a href="http://exercise.about.com/cs/weightloss/a/exercisegoals.htm">http://exercise.about.com/cs/weightloss/a/exercisegoals.htm</a></p>
+	<p><a href="http://www.thatsfit.com/2010/01/13/help-im-lost-without-a-fitness-goal/?sem=1&ncid=aolhth00170000000019&otim=$TIMESTAMP&spid=$SPID&s_kwcid=TC|11093|fitness%20goal||S||5481548210">www.thatsfit.com</a></p><br />
+	<ul>
+		<li>"Who can view": Set who can view your goals and progress.</li>
+		<li>"Goal type": Which sort of activity/statistic is it you are going to work on?</li>
+		<li>"Goal metric": How is this activity/statistic measured?</li>
+		<li>"Goal unit number": This is what you want your performance/statistic to be by the deadline.</li>
+		<li>"Starting unit number": What is your current performance/statistic at right now?</li>
+		<li>"Goal unit type": What is the unit of measurement for this particular performance/statistic?</li>
+		<li>"Primary goal": You are required to mark one goal as the primary goal you are working to accomplish by the deadline.  If you later mark a different goal as primary, your original primary goal will remain, and will no longer be marked as primary.</li>
+	</ul>
+	<br />
+	<p>Goal-unit-number and Starting-unit-number are considered	totals.  This means if you weigh 180 lbs, but want to lose 20 lbs, your "Goal unit number" will be "160", not "20."</p>
+
+</div>
+<div class="clear_this"></div>
+{% endblock %}
+
+{% block content %}
+{% if goals %}
+<h4>You are required to declare a primary goal before you may continue.  Please create one here, or <a href="#" onclick="$('#edit_goals').slideToggle(600); return false;">mark an existing goal</a> as primary.</h4>
+<div id="edit_goals" style="display: none; text-align: left; width: 300px; height: 30px; margin: 0px auto;">
+	<select class="perm_select" id="goal_select" style="width: 210px; ">
+	{% for g in goals %}
+		<option value="{{g.id}}">{{ g.describe|safe }}</option>
+	{% endfor %}
+	</select> &nbsp; <input type="button" onclick='document.location.href="/membership/edit_goal/"+document.getElementById("goal_select").options[document.getElementById("goal_select").selectedIndex].value+"/?{{next}}&amp;primary=set";' value="Set Primary" />
+</div>
+{% endif %}
+<h2>{% if form.instance.goal_start_date %}Edit{% else %}Create{% endif %} your goal:</h2>
+<p>Community deadline for this goal: <strong>December, 9 2010</strong>.  Remember to plan a realistic goal!</p>
+<br />
+<form action="" method="POST">
+<table class="goal_form_table"><tbody>
+{{ form }}
+</tbody></table><br/>
+<input type="submit" name="submit_type" value="Save and continue" /> &nbsp;
+<input type="submit" name="submit_type" value="Save and then create a new goal" />
+</form>
+{% endblock %}
+
+

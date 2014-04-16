@@ -1,0 +1,29 @@
+
+.entry_table
+{
+	width: 550px;
+	border: 1px solid black;
+}
+
+.entry_table thead th
+{
+	background-color: #AAA;
+	color: #000;
+	text-align: left;
+}
+
+.entry_table tbody th
+{
+	background-color: #AAA;
+	color: #000;
+	text-align: left;
+}
+
+.entry_table tbody td
+{
+	text-align: left;
+	vertical-align: top;
+	background-color: #DCFFD7;
+	color: #149500;	
+}
+

@@ -1,0 +1,28 @@
+/*
+form table
+{
+	margin: auto;
+	font-size: 16px;
+}
+
+form table th
+{
+	text-align: right;	
+}
+
+form table td
+{
+	text-align: left;
+}
+
+*/
+
+input, form select, form textarea
+{
+	border: 1px solid #6666A3;
+}
+
+.submit
+{
+	text-align: center;
+}

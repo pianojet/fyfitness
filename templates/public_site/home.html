@@ -1,0 +1,107 @@
+{% extends "public_site/base.html" %}
+{% load user_widget %}
+{% block title %}{% endblock %}
+{% block script %}{% endblock %}
+
+{% block headstuff %}
+	<link href="{{STATIC_URL}}/public_site/css/home.css" rel="stylesheet" type="text/css" media="screen" />
+{% endblock %}
+
+{% block content %}
+
+{% if membership_home_content %}
+
+{{ membership_home_content|safe }}
+
+{% endif %}
+
+
+<div style="border: 1px solid black" class="my-ui-corner-all">
+
+</div>
+
+
+<div class="inner_box p_left_side">
+	<div class="inner_box_head">
+	</div>
+	<div class="inner_box_body">
+		<div class="relocate">
+			<h1>Welcome our newest members:</h1>
+			<br />
+			{% if new_member_list %}
+				{% for m in new_member_list %}
+
+					<!--
+					<a href="/membership/show_profile/{{m.user.id}}/"><strong class="{% ifequal m.hp_confirmed 1 %}p_hp{% else %}p_nothp{% endifequal %}">{{ m.user.username }}</strong></a>
+					#}
+					-->
+					<p>{{m.id|user_widget:user|safe}}</p>
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+	<div class="inner_box_foot">
+	</div>
+</div>
+
+
+
+<div class="inner_box p_right_side">
+	<div class="inner_box_head">
+	</div>
+	<div class="inner_box_body">
+		<div class="relocate">
+			<h1>Member of the Week</h1>
+			<em>(coming soon!)</em>
+			<br />
+			<img src="../images/anon1.png" width="100px" height="120px" />
+		</div>
+	</div>
+	<div class="inner_box_foot">
+	</div>
+</div>
+
+<div class="clear_this"></div>
+
+<div class="large_inner_box">
+	<div class="large_inner_box_head">
+	</div>
+	<div class="large_inner_box_body">
+		<div class="large_relocate">
+			<h1>Inspired, Healthy Lifestyle</h1>
+			<ul>
+				<li>Select members to follow, track progress, and support</li>
+				<li>Set a goal, track your progress, and blog about what you're going through</li>
+				<li>Offer and take suggestions and advice from people that aren't trying to sell anything!</li>
+				<li>Share within a secure community of other 'health-seekers' and health professionals</li>
+				<li>Be involved in community events</li>
+				<li>View articles posted by members and health professionals on a variety of subjects such as nutrition and exercise</li>
+			</ul>
+		</div>
+	</div>
+	<div class="large_inner_box_foot">
+	</div>
+</div>
+
+<div class="inner_box p_left_side">
+	<div class="inner_box_head">
+	</div>
+	<div class="inner_box_body">
+		<div class="relocate">
+			<h1>Coming Soon</h1>
+			<ul>
+				<li>Tracking &amp; calculation of certain stats (weight, height, BMI, etc.)</li>
+				<li>Personal icons!</li>
+				<li>Community-wide averages of goal-progress</li>
+				<li>Charts of goal-progress</li>
+			</ul>
+		</div>
+	</div>
+	<div class="inner_box_foot">
+	</div>
+</div>
+
+
+
+{% endblock %}
+

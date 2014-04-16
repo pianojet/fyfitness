@@ -1,0 +1,508 @@
+{% load can_view %}
+{% load get_feedback_list %}
+{% load get_feedback_num %}
+{% load user_widget %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="keywords" content="fitness, health, healthy, exercise, fit, diet, weight, weight loss, dieting, louisville, nutrition, bodybuilding, body fat, motivation, inspiration, health professional" />
+<meta name="description" content="Join the Find Your Fitness community and build a healthy lifestyle!" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Find Your Fitness{% block title %}{% endblock %}</title>
+<link href="{{STATIC_URL}}/public_site/css/main.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="{{STATIC_URL}}/public_site/css/forms.css" rel="stylesheet" type="text/css" media="screen" />
+
+{% block baseurl %}
+<base href="{{STATIC_URL}}public_site/images/" />
+{% endblock %}
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/blitzer/jquery-ui.css" type="text/css" media="screen, projection" />
+
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.5.5/jquery.validate.min.js"></script>
+<!--<script type="text/javascript" src="scripts/overlay.min.js"></script>-->
+<script src="http://cdn.jquerytools.org/1.2.4/all/jquery.tools.min.js"></script>
+<!--<script type="text/javascript" src="flowplayer/flowplayer-3.2.4.min.js"></script>-->
+
+<script type="text/javascript" src="{{STATIC_URL}}/public_site/js/sorttable.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/public_site/js/fyf.js"></script>
+
+
+<script>
+jQuery.expr[':'].regex = function(elem, index, match) {
+    var matchParams = match[3].split(','),
+        validLabels = /^(data|css):/,
+        attr = {
+            method: matchParams[0].match(validLabels) ?
+                        matchParams[0].split(':')[0] : 'attr',
+            property: matchParams.shift().replace(validLabels,'')
+        },
+        regexFlags = 'ig',
+        regex = new RegExp(matchParams.join('').replace(/^\s+|\s+$/g,''), regexFlags);
+    return regex.test(jQuery(elem)[attr.method](attr.property));
+}
+$(function() {
+
+	$(".buttonit").button();
+
+	request_shout_out();
+	request_post_num();
+	move_timer = setInterval(function(){ go_left(); go_right(); }, 500);
+
+	function go_left()
+	{
+		$('#new_post_a').animate({ left: '-=55' }, 4000);
+	}
+
+	function go_right()
+	{
+		$('#new_post_a').animate({ left: '+=55' }, 4000);
+	}
+
+
+	$(':regex(class,\\w\\w\\w\\w_\\w\\w\\w_\\d)').each(function(){
+
+		var c = $(this).attr('class').split('_');
+		var type = c[0];
+		var sub_or_add = c[1];
+		var m_id = c[2];
+
+		if (type == "foll")
+		{
+			if (sub_or_add == "sub")
+			{
+				$(this).click(function(){
+					unfollow(m_id);
+				});
+			}
+			else
+			{
+				$(this).click(function(){
+					follow(m_id);
+				});
+			}
+		}
+		else
+		{
+			if (sub_or_add == "sub")
+			{
+				$(this).click(function(){
+					unauth(m_id);
+				});
+			}
+			else
+			{
+				$(this).click(function(){
+					auth(m_id);
+				});
+			}
+		}
+
+
+	});
+
+
+});
+
+function follow(member_id)
+{
+	var cachebuster = (new Date()).getTime();
+	var docHead = document.getElementsByTagName("head").item(0);
+	var scriptObj;
+	scriptObj = document.createElement("script");
+	scriptObj.setAttribute("src", "/membership/ajax_follow/"+member_id+"/?cb="+cachebuster);
+	docHead.appendChild(scriptObj);
+}
+
+function unfollow(member_id)
+{
+	var cachebuster = (new Date()).getTime();
+	var docHead = document.getElementsByTagName("head").item(0);
+	var scriptObj;
+	scriptObj = document.createElement("script");
+	scriptObj.setAttribute("src", "/membership/ajax_unfollow/"+member_id+"/?cb="+cachebuster);
+	docHead.appendChild(scriptObj);
+}
+
+function auth(member_id)
+{
+	var cachebuster = (new Date()).getTime();
+	var docHead = document.getElementsByTagName("head").item(0);
+	var scriptObj;
+	scriptObj = document.createElement("script");
+	scriptObj.setAttribute("src", "/membership/ajax_auth/"+member_id+"/?cb="+cachebuster);
+	docHead.appendChild(scriptObj);
+}
+
+function unauth(member_id)
+{
+	var cachebuster = (new Date()).getTime();
+	var docHead = document.getElementsByTagName("head").item(0);
+	var scriptObj;
+	scriptObj = document.createElement("script");
+	scriptObj.setAttribute("src", "/membership/ajax_unauth/"+member_id+"/?cb="+cachebuster);
+	docHead.appendChild(scriptObj);
+}
+
+
+function followCallback(mData)
+{
+	if (mData['src'] != "failure")
+	{
+		img_class = (mData['onclick'] == 'sub') ? ".foll_add_"+mData['member_id'] : ".foll_sub_"+mData['member_id']
+		//alert(img_class);
+		//alert(mData['src']);
+		//alert(mData['onclick']);
+		$(img_class).attr({
+			"src": mData['src'],
+			"title": mData['title'],
+			"alt": mData['alt'],
+		}).unbind();
+
+		//$(img_class).attr("onclick", "");
+
+		if (mData['onclick'] == "add")
+			$(img_class).click(function(){
+				//alert('adding follow event handler...');
+				follow(mData['member_id']);
+				$(this).attr({"class": "foll_add_"+mData['member_id']});
+			});
+		else
+			$(img_class).click(function(){
+				//alert('adding unfollow event handler...');
+				unfollow(mData['member_id']);
+				$(this).attr({"class": "foll_sub_"+mData['member_id']});
+			});
+
+	}
+	//else alert(mData['message']);
+}
+
+
+function authCallback(mData)
+{
+	if (mData['src'] != "failure")
+	{
+		img_class = (mData['onclick'] == 'sub') ? ".auth_add_"+mData['member_id'] : ".auth_sub_"+mData['member_id']
+		//alert(img_class);
+		//alert(mData['src']);
+		//alert(mData['onclick']);
+		$(img_class).attr({
+			"src": mData['src'],
+			"title": mData['title'],
+			"alt": mData['alt'],
+		}).unbind();
+
+		//$(img_class).attr("onclick", "");
+		//alert(mData['onclick']);
+		if (mData['onclick'] == "add")
+			$(img_class).click(function(){
+				//alert('adding follow event handler...');
+				auth(mData['member_id']);
+				$(this).attr({"class": "auth_add_"+mData['member_id']});
+			});
+		else
+			$(img_class).click(function(){
+				//alert('adding unfollow event handler...');
+				unauth(mData['member_id']);
+				$(this).attr({"class": "auth_sub_"+mData['member_id']});
+			});
+	}
+	//else alert(mData['message']);
+}
+
+
+
+function request_post_num()
+{
+	var docHead = document.getElementsByTagName("head").item(0);
+	var scriptObj;
+	scriptObj = document.createElement("script");
+	scriptObj.setAttribute("src", "/membership/post_num/");
+	docHead.appendChild(scriptObj);
+}
+
+function postNumCallback(mData)
+{
+	var n1 = document.getElementById('new_post_a');
+	//var n2 = document.getElementById('new_post_a');
+	{% if user.is_authenticated %}
+		n1.innerHTML = ((mData['exists'] == 1) && (mData['entry_num'] > 0)) ? "<a style='font-size: 12px; padding: 21px 5px 0px 0px;' href='/blog/browse/'>Followed Blog updates: "+mData['entry_num']+"</a>" : "<a style='padding: 21px 5px 0px 0px;' href='/blog/browse/'>No updates.</a>"
+		n1.innerHTML += ((mData['exists'] == 1) && (mData['message_num'] > 0)) ? "<a style='font-size: 12px; padding: 0px 6px 0px 0px;' href='/message/browse/'>New messages: "+mData['message_num']+"</a>" : "<a style='padding: 0px 6px 0px 0px;' href='/message/browse/'>No new messages.</a>"
+
+	{% else %}
+		n1.innerHTML = "<p style='padding: 25px 20px 0px 0px;'>We broke 2,500 page hits!</p>"
+	{% endif %}
+
+
+/*
+	var t = document.createElement('table');
+	var shout_table = document.getElementById('shout_table');
+	for (var s=0; s<shouts.length; s++)
+	{
+		var t_tr = document.createElement('tr');
+		var t_td_name = document.createElement('td');
+		var t_td_text = document.createElement('td');
+		var name_html = ""
+		if (shouts[s]['conf_hp'] == true)
+		{
+			name_html = "<strong class='p_hp_shoutout'>"+shouts[s]['name']+"</strong>";
+		}
+		else
+		{
+			name_html = "<strong class='p_nothp_shoutout'>"+shouts[s]['name']+"</strong>";
+		}
+
+		if (shouts[s]['name'] == this_user)
+		{
+			t_td_name.innerHTML = "<a href='/membership/edit_profile/'>"+name_html+"</a>";
+		}
+		else
+		{
+			t_td_name.innerHTML = "<a href='/membership/show_profile/"+shouts[s]['member_id']+"/'>"+name_html+"</a>";
+		}
+
+		t_td_text.innerHTML = shouts[s]['text'];
+		t_tr.appendChild(t_td_name);
+		t_tr.appendChild(t_td_text);
+		t.appendChild(t_tr);
+	}
+
+	shout_table.parentNode.replaceChild(t, shout_table);
+*/
+
+}
+
+function request_shout_out()
+{
+	var docHead = document.getElementsByTagName("head").item(0);
+	var scriptObj;
+	scriptObj = document.createElement("script");
+	scriptObj.setAttribute("src", "/message/get_shouts/");
+	docHead.appendChild(scriptObj);
+}
+
+function shoutCallback(shouts, this_user)
+{
+	var t = document.createElement('table');
+	var shout_table = document.getElementById('shout_table');
+	for (var s=0; s<shouts.length; s++)
+	{
+		var t_tr = document.createElement('tr');
+		var t_td_name = document.createElement('td');
+		var t_td_text = document.createElement('td');
+		var name_html = ""
+		if (shouts[s]['conf_hp'] == true)
+		{
+			name_html = "<strong class='p_hp_shoutout'>"+shouts[s]['name']+"</strong>";
+		}
+		else
+		{
+			name_html = "<strong class='p_nothp_shoutout'>"+shouts[s]['name']+"</strong>";
+		}
+
+		if (shouts[s]['name'] == this_user)
+		{
+			t_td_name.innerHTML = "<a href='/membership/edit_profile/'>"+name_html+"</a>";
+		}
+		else
+		{
+			t_td_name.innerHTML = "<a href='/membership/show_profile/"+shouts[s]['user_id']+"/'>"+name_html+"</a>";
+		}
+
+		t_td_text.innerHTML = shouts[s]['text'];
+		t_tr.appendChild(t_td_name);
+		t_tr.appendChild(t_td_text);
+		t.appendChild(t_tr);
+	}
+
+	shout_table.parentNode.replaceChild(t, shout_table);
+	resize_right_bar();
+}
+
+function resize_right_bar()
+{
+	var right_bar = document.getElementById('right_bar_content');
+	var content = document.getElementById('left_bar');
+
+	//alert(right_bar.clientHeight+" < "+content.clientHeight+" ?");
+
+	if (right_bar.clientHeight < content.clientHeight)
+	{
+		//alert("yes!");
+		right_bar.style.height = (content.clientHeight+10) + "px";
+		content.style.height = (content.clientHeight-12) + "px";
+	}
+}
+
+</script>
+
+
+
+{% block script %}{% endblock %}
+{% block headstuff %}
+{% endblock %}
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18941282-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body onload="" class="yui-skin-sam">
+<div id="wrapper">
+	<div id="header">
+
+		<div id="logo">
+			<div id="logo_pieces">
+				<p id="logo_piece1"><em>A healthy lifestyle is possible for everyone...</em></p>
+				<p id="logo_piece2"><em>... right now.</em></p>
+			</div>
+		</div>
+		<div id="log_menu">
+
+			<table></tbody>
+				{% if user.is_authenticated %}
+
+				<tr>
+					<td><a href="/logout/">Logout {{user.username}}</a></td>
+				</tr>
+				<tr>
+					<td><a href="/blog/write/">New Journal Entry</a></td><td><a href="/blog/browse/">Browse Members</a></td>
+				</tr>
+				<tr>
+					<td><a href="/membership/update_progress/">Goal Progress</a></td><td><a href="/membership/follow/">My Following</a></td>
+				</tr>
+				<tr>
+					<td><a href="/message/write/">Write Message</a></td><td><a href="/message/browse/">Read Messages</a></td>
+				</tr>
+				<tr>
+					<td><a href="/membership/show_profile/{{user.id}}/">My Profile</a></td><td><a href="/membership/show_profile/">Find Profiles</a></td>
+				</tr>
+
+				{% else %}
+
+				<tr>
+					<td><a href="/login/">Login</a></td><td><a href="/accounts/register/">Register</a></td>
+				</tr>
+				<tr>
+					<td><em class="disable_me">New Journal Entry</em></td><td><em class="disable_me">Browse Members</em></td>
+				</tr>
+				<tr>
+					<td><em class="disable_me">Goal Progress</em></td><td><em class="disable_me">Friends</em></td>
+				</tr>
+				<tr>
+					<td><em class="disable_me">Write Message</em></td><td><em class="disable_me">Read Messages</em></td>
+				</tr>
+				<tr>
+					<td><em class="disable_me">My Profile</em></td><td><em class="disable_me">Find Profiles</em></td>
+				</tr>
+
+				{% endif %}
+			</tbody></table>
+
+		</div>
+		<div class="clear_this"></div>
+	</div>
+	<div id="green_mid_bar">
+
+		<div id="green_menu_left">
+			<ul>
+				{% if user.is_authenticated %}
+					<li><a href="/membership/home/">Home</a></li>
+				{% else %}
+					<li><a href="/public_site/">Home</a></li>
+				{% endif %}
+				<li><a href="/public_site/news/">News</a></li>
+				<li><a href="/public_site/aboutus/">About</a></li>
+				<li><a href="/public_site/nutrition/">Nutrition</a></li>
+				<li><a href="/public_site/exercise/">Exercise</a></li>
+				<li><a href="/public_site/faq/">FAQ</a></li>
+			</ul>
+		</div>
+		<div id="green_menu_right">
+			<div style="padding-top:20px; margin-right: 33px; float:right;">
+				<p><em>Contact - </em></p>
+				<p><em><strong>fyfitness@gmail.com</strong></em></p>
+			</div>
+			<ul>
+				<li id="new_post_a"></li>
+				{% if user.is_authenticated %}
+				{% endif %}
+			</ul>
+
+		</div>
+	</div>
+
+	<div id="content">
+		<div id="left_bar">
+
+			{% block helpdiv %}
+			{% endblock %}
+
+			{% if dbmessage %}<h2>{{ dbmessage|safe }}</h2>{% endif %}
+			{% if message %}<h2>{{ message }}</h2>{% endif %}
+
+			{% block content %}
+			{% endblock %}
+		</div>
+
+		<div id="right_bar">
+			<div id="right_bar_control">
+				<div id="right_bar_top">
+				</div>
+				<div id="right_bar_content">
+					<div id="feedback" class="my-ui-corner-all">
+						<p id="feedbackButton">&raquo;&raquo;&nbsp;{{ user|get_feedback_num }} member(s) request feedback</p>
+						<div id="feedbackDiv">
+							{% ifequal user|get_feedback_num 0 %}
+								<p>Nobody has requested feedback in their journal entries recently.</p>
+							{% else %}
+								{% for f in user|get_feedback_list %}
+									<!--
+									<p><a href="/membership/show_profile/{{f.member.user.id}}/"><strong class="{% ifequal f.member.hp_confirmed 1 %}p_hp_shoutout{% else %}p_nothp_shoutout{% endifequal %}">{{f.member.user.username}}</strong></a>&nbsp;-&nbsp;<a href="/blog/browse/{{f.member.id}}/{{f.id}}/">{{f.title}}</a></p>
+									-->
+									<p>{{f.member.id|user_widget:user|safe}}&nbsp;-&nbsp;<a title="View Entry" href="/blog/browse/{{f.member.id}}/{{f.id}}/">{{f.title}}</a></p>
+								{% endfor %}
+							{% endifequal %}
+						</div>
+					</div>
+					<div style="text-align: center; margin: auto; width: 200px; padding-top: 20px;">
+						<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like href="http://www.facebook.com/pages/fyfitnesscom/157996867564596" width="250" font="verdana" colorscheme="dark"></fb:like>
+					</div>
+					<br />
+					<a id="shout_out" href="/message/shoutout/">Shout Out!</a>
+					<br />
+					<table id="shout_table"></table>
+					{% block rightbar %}
+					{% endblock %}
+				</div>
+			</div>
+		</div>
+
+		<div class="clear_this"></div>
+
+	</div>
+
+
+</div>
+<div id="footer">
+	<p>Site Design by Justin Taylor</p>
+	<p><a style="font-weight: bold; text-decoration: underline;" href="{{STATIC_URL}}/documents/fyf.pdf">Terms and Conditions</a></p>
+	<p></strong>fyfitness@gmail.com</strong></p>
+</div>
+
+
+
+</body>
+</html>
+

@@ -1,0 +1,53 @@
+{% extends "public_site/base.html" %}
+{% block title %}{% endblock %}
+{% block script %}{% endblock %}
+
+{% block headstuff %}
+	<link href="{{STATIC_URL}}/public_site/css/home.css" rel="stylesheet" type="text/css" media="screen" />
+
+<style>
+#faq
+{
+	list-style-type: none;
+}
+
+.question
+{
+	font-weight: bold;
+	text-decoration: underline;
+	padding: 20px 0px;
+}
+
+.answer
+{
+	font-weight: normal;
+}
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+<div class="large_inner_box">
+	<div class="large_inner_box_head">
+	</div>
+	<div class="large_inner_box_body">
+		<div class="large_relocate">
+			<h1>Frequently Asked Questions</h1>
+			<ul id="faq">
+				<li class="question">What is "feedback?"</li>
+				<li class="answer">When you write a journal entry, there may be something that you are writing about in which you would like people to offer their input/solutions/ideas.  By checking "Do you request feedback?" box in the top of the new journal entry area, your post will be counted in the main right blue bar to make it easy for people to find your entry and comment on it.</li>
+				<li class="question">How do I find somebody's profile?</li>
+				<li class="answer">Usually, clicking the highlighted user name of a member will send you to his/her profile (although when browsing journals, it will take you to their journal entry list).  The "Find Profiles" option at the top will allow you to locate any member by typing their name, and matching user names will be provided as you type to help you complete the user name.</li>
+			</ul>
+		</div>
+	</div>
+	<div class="large_inner_box_foot">
+	</div>
+</div>
+{% endblock %}
+
+
+{% block rightbar %}
+{% endblock %}
+

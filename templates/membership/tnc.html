@@ -1,0 +1,18 @@
+{% extends "public_site/base.html" %}
+{% block title %}{% endblock %}
+{% block script %}{% endblock %}
+
+
+{% block content %}
+
+<p>You must accept the <a style="font-weight: bold; text-decoration: underline;" href="{{STATIC_URL}}/documents/fyf.pdf">terms and conditions</a> in order to utilize this website.</p>
+<form method="POST" action="">
+<table>
+{{ form }}
+<tr><td colspan="2" class="submit"><input type="submit"/></td></tr>
+</table>
+</form>
+
+{% endblock %}
+
+

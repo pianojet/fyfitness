@@ -1,0 +1,41 @@
+{% extends "public_site/base.html" %}
+{% block title %}{% endblock %}
+{% block script %}{% endblock %}
+
+{% block headstuff %}
+	<link href="{{STATIC_URL}}/blog/css/blog.css" rel="stylesheet" type="text/css" media="screen" />
+{% endblock %}
+
+{% block helpdiv %}
+<div id="helpButton" class="my-ui-corner-all">Help...</div>
+<div id="helpDiv" class="my-ui-corner-all">
+	<p>Write a new journal entry in the large box provided.  You will also need to provide a title.</p>
+	<p>Check the box labeled "Would you like feedback?" to let the community know you're open to advice about something in your entry.</p>
+</div>
+<div class="clear_this"></div>
+{% endblock %}
+
+{% block content %}
+
+<form method="POST" action="">
+	<table class="entry_table">
+		<thead>
+			<tr>
+				<th>New Journal Entry<span class="p_right_side">Who has access to this post?{{form.who_can_view}}{{form.who_can_view.error}}</span></th>
+			</tr>
+			<tr>
+				<th>Title: {{form.title}}{{form.title.error}}<span class="p_right_side">Do you request feedback?{{form.do_you_want_feedback}}{{form.do_you_want_feedback.error}}</span></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{form.text.error}}{{form.text}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<input type="submit"/>
+</form>
+
+{% endblock %}
+
+

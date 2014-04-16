@@ -1,0 +1,69 @@
+{% extends "public_site/base.html" %}
+{% block title %}{% endblock %}
+{% block script %}{% endblock %}
+
+{% block headstuff %}
+	<link href="{{STATIC_URL}}/membership/css/profile.css" rel="stylesheet" type="text/css" media="screen" />
+{% endblock %}
+
+{% block helpdiv %}
+<div id="helpButton" class="my-ui-corner-all">Help...</div>
+<div id="helpDiv" class="my-ui-corner-all">
+	<p>Please give us some information about yourself.</p>
+</div>
+<div class="clear_this"></div>
+{% endblock %}
+
+{% block content %}
+
+<h3>Creating Profile:</h3>
+<form method="POST" action="">
+<table class="create_profile_table">
+<table><tbody>
+	<tr>
+		<th class="right_align">Username</th><td class="left_align">{{ user.username }}</td>
+		<th class="right_align">Gender</th><td class="left_align">{{form.gender.errors}}{{form.gender}}</td>
+	</tr>
+	<tr>
+		<th class="right_align">First Name</th><td class="left_align">{{form.first_name.errors}}{{form.first_name}}</td>
+		<th class="right_align">Last Name</th><td class="left_align">{{form.last_name.errors}}{{form.last_name}}</td>
+	</tr>
+	<tr>
+		<th class="right_align">Location</th><td class="left_align">{{form.location.errors}}{{form.location}}</td>
+		<th class="right_align">Occupation</th><td class="left_align">{{form.occupation.errors}}{{form.occupation}}</td>
+	</tr>
+	<tr>
+		<th colspan="4">Strengths</th>
+	</tr>
+	<tr>
+		<td colspan="4">{{form.strengths.errors}}{{form.strengths}}</td>
+	</tr>
+	<tr>
+		<th colspan="4">Request Support With</th>
+	</tr>
+	<tr>
+		<td colspan="4">{{form.want_support.errors}}{{form.want_support}}</td>
+	</tr>
+	<tr>
+		<th colspan="4">About Me</th>
+	</tr>
+	<tr>
+		<td colspan="4">{{form.about_me.errors}}{{form.about_me}}</td>
+	</tr>
+	<tr>
+		<th class="right_align" colspan="2">Who Can View Profile</th><td class="left_align" colspan="2">{{form.who_can_view.errors}}{{form.who_can_view}}</td>
+	</tr>
+	<tr>
+		<th class="right_align" colspan="2">Health Professional?</th><td class="left_align" colspan="2">{{form.i_am_a_health_professional.errors}}{{form.i_am_a_health_professional}}</td>
+	</tr>
+	<tr>
+		<th class="right_align" colspan="2">Do you accept <a style="text-decoration: underline;" href="{{STATIC_URL}}/documents/fyf.pdf" target="_blank">Terms and Conditions</a>?</th><td class="left_align" colspan="2">{{form.i_accept_terms_and_conditions.errors}}{{form.i_accept_terms_and_conditions}}</td>
+	</tr>
+	<tr><td colspan="4" class="submit"><input type="submit"/></td></tr>
+
+</tbody></table>
+</form>
+
+{% endblock %}
+
+

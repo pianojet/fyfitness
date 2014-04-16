@@ -1,0 +1,509 @@
+*
+{
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
+table
+{
+	border-collapse: collapse;
+	margin: auto;
+}
+
+ul
+{
+	list-style:disc inside none;
+}
+
+table td
+{
+	padding: 5px;
+}
+
+table th
+{
+	padding: 5px;
+}
+
+body
+{
+	margin: 0;
+	padding: 0;
+	background-color: #f9f9f7;
+	background-image: url(../images/body_bg.png);	
+	background-repeat: repeat-x;
+	text-align: center;
+}
+
+#wrapper
+{
+	background-image: url(../images/wrapper_bg3.png);	
+	width: 960px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000D5F;
+	margin: 0 auto;
+	padding: 0 20px;
+	
+}
+
+#header
+{
+	height: 156px;
+}
+	#logo
+	{
+		float: left;
+		height: 156px;
+		width: 600px;
+		background-image: url(../images/headlogo1.png);
+		background-repeat: no-repeat;
+	}
+	
+		#logo_pieces
+		{
+			position: relative;
+			font-size: 14px;
+		}
+			#logo_piece1
+			{
+				position: relative;
+				top: 7px;
+				left: 190px;
+				width: 405px;
+			}
+			#logo_piece2
+			{
+				position: relative;
+				top: 115px;
+				left: -190px;
+			}
+		
+
+	#log_menu
+	{
+		float: left;
+		height: 146px;
+		color: white;
+		background-image: url(../images/menu_bg.png);
+		width: 360px;
+		padding-top: 10px;
+	}
+	
+	#log_menu table
+	{
+		border-collapse: collapse;
+		text-align: left;
+		margin: auto;
+	}
+	
+	#log_menu table td
+	{
+		border-left: 1px solid white;
+		
+		padding: 0px 8px;
+	}
+	
+	#log_menu a
+	{
+		font-size: 15px;
+		color: #2946FF;
+	}
+
+	#log_menu a:hover
+	{
+		color: #D8DBFF;	
+	}	
+	
+	#log_menu .disable_me
+	{
+		font-size: 15px;
+		color: #AAA;
+	}
+	
+	
+	
+#green_mid_bar
+{
+	position: relative;
+	top: -6px;
+	left: -50px;
+	height:76px;
+	width: 1011px;
+	padding: 0 60px;
+	background-image: url(../images/green_mid_bar.png);
+	background-repeat: no-repeat;
+}
+
+	#green_menu_left ul
+	{
+		line-height:normal;
+		list-style:none outside none;
+	}
+	
+	#green_menu_left ul li
+	{
+		display: inline;
+		float: left;
+	}
+	
+	#green_menu_left a
+	{
+		display: block;
+		font-size: 18px;
+		padding-top: 24px;
+		padding-right: 40px;
+		color: #02D711;	
+	}
+
+	#green_menu_left a:hover
+	{
+		color: #9EFFA4;	
+	}	
+	
+	/*************/
+	
+	#green_menu_right ul
+	{
+		line-height:normal;
+		list-style:none outside none;
+	}
+	
+	#green_menu_right ul li
+	{
+		float: right;
+	}
+	
+	#green_menu_right a
+	{
+		display: block;
+		font-size: 18px;
+		padding-top: 24px;
+		padding-right: 20px;
+		color: #02D711;	
+	}
+	
+	#green_menu_right em
+	{
+		display: block;
+		font-size: 10px;
+		padding-top: 0px;
+		padding-right: 0px;
+		color: #02D711;	
+	}	
+
+	#green_menu_right a:hover
+	{
+		color: #9EFFA4;	
+	}	
+	
+	#new_post_a
+	{
+		position: relative;
+	}
+
+	#new_post_a a,#new_post_a p
+	{
+		color: #02D711;
+		font-size: 12px; 
+	}
+	
+		
+		
+	
+
+#content
+{
+	/* this is only here in order to make the left blue bar look clean at the top */
+	position: relative;
+	top: 3px;
+	/*****/
+}
+
+	#left_bar
+	{
+		width: 642px;
+		padding: 20px;
+		float: left;
+	}
+	
+	#right_bar
+	{
+		float: left;
+		color: #2946FF;
+		/* background-color: #010a43; */
+		background-image: url(../images/fyfblue.png);
+	}
+		#right_bar_control
+		{
+			position: relative;
+			top: -15px;
+		}
+			#right_bar #right_bar_top
+			{
+				width: 278px;
+				height: 15px;
+				background-image: url(../images/right_sidebar_top.png);
+				background-repeat: no-repeat;
+			}
+			#right_bar #right_bar_content
+			{
+				width: 258px;
+				background-image: url(../images/right_sidebar.png);
+				padding: 20px 10px;
+			}
+
+#helpButton
+{
+	text-align: center;
+	font-size: 10px;
+	color: #FFF;
+	cursor: pointer;
+	background-color: #000;
+	padding: 5px;
+	width: 30px;
+	position: relative;
+	top:-20px;
+	left: -10px;
+}
+
+#helpDiv
+{
+	margin: auto;
+	text-align: left;
+	width: 600px;
+	border: 3px ridge black;
+	padding: 10px;
+}
+
+
+#helpDiv p
+{
+	margin: 5px 0px;
+}
+
+
+
+#feedback
+{
+	width: 258px;
+	text-align: center;
+	margin: auto;
+	border: 3px solid #444;
+}
+
+#feedbackButton
+{
+	text-align: center;
+	font-size: 14px;
+	color: #FFF;
+	cursor: pointer;
+	width: 258px;
+	text-decoration: underline;
+	margin: 6px 0px;
+}
+
+#feedbackDiv
+{
+	margin: auto;
+	text-align: center;
+	width: 250px;
+	font-size: 12px;
+}
+
+#feedbackDiv p
+{
+	margin: 6px 0px;
+}
+
+			
+#right_bar_content table
+{
+	border-collapse: collapse;
+	margin: auto;
+	font-size: 12px;
+}
+
+#right_bar_content table td
+{
+
+}
+
+#right_bar_content .person
+{
+	color: #00B224;
+}
+
+#right_bar_content .shout
+{
+	color: #2946FF;
+}
+
+#shout_out
+{
+	color: white;
+	margin-bottom: 15px;
+	text-decoration: underline;
+	font-size: 18px;
+}
+			
+#footer
+{
+	position: relative;
+	top: 0;
+	height: 98px;
+	width: 1000px;
+	margin: auto;
+	font-size: 12px;
+	background-image: url(../images/wrapper_bg3_footer.png);
+	background-repeat: no-repeat;
+	color: #2946FF;
+	margin-bottom: 30px;
+	padding: 5px 0px;
+
+}
+
+h1
+{
+	font-family:"Times New Roman", Times, serif;
+	text-align: center;
+	color: #000D5F;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+h2
+{
+	font-family:"Times New Roman", Times, serif;
+	margin-bottom: 15px;
+	text-align: left;
+	color: #000D5F;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+h3
+{
+	font-family:"Times New Roman", Times, serif;
+	margin-bottom: 15px;
+	text-align: left;
+	color: #026916;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+h4
+{
+	font-family:"Times New Roman", Times, serif;
+	margin-bottom: 15px;
+	text-align: center;
+	color: #026916;
+	font-weight: bold;
+	font-size: 20px;
+}
+
+
+a {
+	text-decoration: none;
+	color: #1757AB;
+}
+
+a:hover {
+}
+
+
+a.x_remove
+{
+	color: #D50000;
+}
+a.x_remove:hover {
+	color: #FC7373;
+}
+
+
+.clear_this
+{
+	clear: both;
+}
+
+.right_align
+{
+	text-align: right;
+}
+
+.left_align
+{
+	text-align: left;
+}
+
+.p_left_side
+{
+	float: left;
+}
+
+
+.p_right_side
+{
+	float: right;
+}
+
+.p_hp
+{
+	background-color: #CBFFC3;
+	color: #0D6200;
+	padding: 0px 5px;
+}
+
+.p_nothp
+{
+	background-color: #C3BFFF;
+	color: #060057;
+	padding: 0px 5px;	
+}
+
+.p_hp_shoutout
+{
+	background-color: #010a43;
+	color: #6FFF58;
+	padding: 0px 5px;	
+}
+
+.p_nothp_shoutout
+{
+	background-color: #010a43;
+	color: #6358FF;
+	padding: 0px 5px;	
+}
+
+.sortable th
+{
+	cursor: pointer;
+}
+
+.user_links
+{
+	border: 1px solid black;
+	padding: 0;
+	margin: 0;
+	background-color: #FFF;
+	vertical-align:middle;
+}
+
+.user_links a
+{
+
+}
+
+.user_links img
+{
+	position: relative;
+	top: 3px;
+	cursor: pointer;
+}
+
+.my-ui-corner-all
+{
+	-moz-border-radius: 8px; 
+	-webkit-border-radius: 8px; 
+}

@@ -1,0 +1,140 @@
+{% extends "calendar/base.html" %}
+{% load get_total_entry_num %}
+{% block title %}{% endblock %}
+{% block headstuff %}
+
+{% endblock %}
+
+{% block script %}
+<script>
+
+var today = new Date();
+var todayMonth = today.getMonth();
+var todayYear = today.getFullYear();
+
+function drawNext()
+{
+	window.thisMonth.drawNextMonth();
+	window.nextMonth.drawNextMonth();
+}
+
+function drawPrev()
+{
+	window.thisMonth.drawPreviousMonth();
+	window.nextMonth.drawPreviousMonth();
+}
+
+function drawNow()
+{
+	window.thisMonth.currentMonth = todayMonth; thisMonth.currentYear = todayYear;
+	window.nextMonth.currentMonth = todayMonth; nextMonth.currentYear = todayYear;
+
+	/*
+	window.prevMonth.drawPreviousMonth();
+	window.thisMonth.drawCurrent();
+	window.nextMonth.drawNextMonth();
+	*/
+
+	window.thisMonth.drawNextMonth();
+	window.nextMonth.drawNextMonth();window.nextMonth.drawNextMonth();
+}
+
+function dayCallback(y, m, d)
+{
+	alert(y+'-'+m+'-'+d);
+}
+
+$(function() {
+
+
+	var cdivThis = document.getElementById('calendar_divThis');
+	var cdivNext = document.getElementById('calendar_divNext');
+
+	window.thisMonth = new MyCalendar('calendar_divThis', dayCallback);
+	window.nextMonth = new MyCalendar('calendar_divNext', dayCallback);
+	drawNow();
+
+	//DisplayCalendar.addCalendar(cdiv);
+
+
+});
+
+</script>
+
+<style>
+#cal_table
+{
+	border-collapse: collapse;
+	margin: 3px auto;
+}
+
+#cal_table td
+{
+	vertical-align: top;
+	padding: 2px 0px;
+}
+
+.month_table
+{
+
+	border: 1px solid black;
+	margin: auto;
+}
+.month_table td
+{
+	width: 70px;
+	height: 85px;
+	vertical-align: top;
+	text-align: left;
+	border: 1px dotted black;
+	padding: 1px;
+}
+</style>
+
+{% endblock %}
+
+{% block helpdiv %}
+<div id="helpButton" class="my-ui-corner-all">Help...</div>
+<div id="helpDiv" class="my-ui-corner-all">
+	<p>Calendar!  Plan your work, and work your plan!</p>
+</div>
+<div class="clear_this"></div>
+{% endblock %}
+
+
+{% block content %}
+<h2>Calendar</h2>
+
+<table>
+	<tbody>
+		<tr>
+			<td style="text-align: center; width: 30%;" colspan=2>
+				Start Date:
+				<br/>
+				<input type="text" name="start_date" id="start_date" disabled="disabled" value="{{ start_date.year }}-{{ start_date.month }}-{{ start_date.day }}" size="13" />
+			</td>
+		</tr>
+	</tbody>
+</table>
+<span></span>
+<table id="cal_table">
+	<thead>
+		<tr>
+			<th><button type="button" onclick="drawPrev()"><</button></th>
+			<th><button type="button" onclick="drawNext()">></button></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><div id="calendar_divThis"></div></td>
+			<td><div id="calendar_divNext"></div></td>
+		</tr>
+	</tbody>
+	<tfoot>
+	</tfoot>
+</table>
+
+
+{% endblock %}
+
+

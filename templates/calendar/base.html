@@ -1,0 +1,171 @@
+{% load get_feedback_list %}
+{% load get_feedback_num %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="keywords" content="fitness, health, healthy, exercise, fit, diet, weight, weight loss, dieting, louisville, nutrition, bodybuilding, body fat, motivation, inspiration, health professional" />
+<meta name="description" content="Join the Find Your Fitness community and build a healthy lifestyle!" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Find Your Fitness{% block title %}{% endblock %}</title>
+<link href="{{STATIC_URL}}/public_site/css/main.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="{{STATIC_URL}}/public_site/css/forms.css" rel="stylesheet" type="text/css" media="screen" />
+
+{% block baseurl %}
+<base href="{{STATIC_URL}}public_site/images/" />
+{% endblock %}
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/blitzer/jquery-ui.css" type="text/css" media="screen, projection" />
+
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery.validate/1.5.5/jquery.validate.min.js"></script>
+<!--<script type="text/javascript" src="scripts/overlay.min.js"></script>-->
+<script src="http://cdn.jquerytools.org/1.2.4/all/jquery.tools.min.js"></script>
+<!--<script type="text/javascript" src="flowplayer/flowplayer-3.2.4.min.js"></script>-->
+
+<script type="text/javascript" src="{{STATIC_URL}}/public_site/js/sorttable.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}/public_site/js/fyf.js"></script>
+
+<!-- calendar functionality -->
+	<link href="{{STATIC_URL}}/calendar/css/calendar.css" rel="stylesheet" type="text/css" media="screen" />
+	<script type="text/javascript" src="{{STATIC_URL}}/calendar/js/core.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}/calendar/js/gettext.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}/calendar/js/calendar.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}/calendar/js/mycalendar.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}/calendar/js/DateTimeShortcuts.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}/calendar/js/displaycalendar.js"></script>
+
+<!---------------------------->
+
+<script>
+$(function() {
+
+
+
+});
+</script>
+
+
+
+{% block script %}{% endblock %}
+{% block headstuff %}
+{% endblock %}
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-18941282-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body onload="" class="yui-skin-sam">
+<div id="wrapper">
+	<div id="header">
+
+		<div id="logo">
+			<div id="logo_pieces">
+				<p id="logo_piece1"><em>A healthy lifestyle is possible for everyone...</em></p>
+				<p id="logo_piece2"><em>... right now.</em></p>
+			</div>
+		</div>
+		<div id="log_menu">
+
+			<table></tbody>
+				{% if user.is_authenticated %}
+
+				<tr>
+					<td><a href="/logout/">Logout {{user.username}}</a></td>
+				</tr>
+				<tr>
+					<td><a href="/blog/write/">New Journal Entry</a></td><td><a href="/blog/browse/">Browse Journals</a></td>
+				</tr>
+				<tr>
+					<td><a href="/membership/update_progress">Goal Progress</a></td><td><a href="/membership/follow/">My Following</a></td>
+				</tr>
+				<tr>
+					<td><a href="/message/write/">Write Message</a></td><td><a href="/message/browse/">Read Messages</a></td>
+				</tr>
+				<tr>
+					<td><a href="/membership/show_profile/{{user.id}}/">My Profile</a></td><td><a href="/membership/show_profile">Find Profiles</a></td>
+				</tr>
+
+				{% else %}
+
+				<tr>
+					<td><a href="/login/">Login</a></td><td><a href="/accounts/register/">Register</a></td>
+				</tr>
+				<tr>
+					<td><em class="disable_me">New Journal Entry</em></td><td><em class="disable_me">Browse Journals</em></td>
+				</tr>
+				<tr>
+					<td><em class="disable_me">Goal Progress</em></td><td><em class="disable_me">Friends</em></td>
+				</tr>
+				<tr>
+					<td><em class="disable_me">Write Message</em></td><td><em class="disable_me">Read Messages</em></td>
+				</tr>
+				<tr>
+					<td><em class="disable_me">My Profile</em></td><td><em class="disable_me">Find Profiles</em></td>
+				</tr>
+
+				{% endif %}
+			</tbody></table>
+
+		</div>
+		<div class="clear_this"></div>
+	</div>
+	<div id="green_mid_bar">
+		<div id="green_menu_left">
+			<ul>
+				{% if user.is_authenticated %}
+					<li><a href="/membership/home/">Home</a></li>
+				{% else %}
+					<li><a href="/public_site/">Home</a></li>
+				{% endif %}
+				<li><a href="/public_site/news/">News</a></li>
+				<li><a href="/public_site/aboutus/">About</a></li>
+				<li><a href="/public_site/nutrition/">Nutrition</a></li>
+				<li><a href="/public_site/exercise/">Exercise</a></li>
+			</ul>
+		</div>
+		<div id="green_menu_right">
+			<div style="padding-top:20px; margin-right: 33px; float:right;">
+				<p><em>Contact - </em></p>
+				<p><em><strong>fyfitness@gmail.com</strong></em></p>
+			</div>
+			<ul>
+				<li id="new_post_a"></li>
+				{% if user.is_authenticated %}
+				{% endif %}
+			</ul>
+
+		</div>
+	</div>
+
+	<div id="content">
+{% block content %}
+
+
+{% endblock %}
+
+	</div>
+
+
+</div>
+<div id="footer">
+	<p>Site Design by Justin Taylor</p>
+	<p><a style="font-weight: bold; text-decoration: underline;" href="{{STATIC_URL}}/documents/fyf.pdf">Terms and Conditions</a></p>
+	<p></strong>fyfitness@gmail.com</strong></p>
+</div>
+
+
+
+</body>
+</html>
+

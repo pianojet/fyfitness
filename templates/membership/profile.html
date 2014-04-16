@@ -1,0 +1,238 @@
+{% extends "public_site/base.html" %}
+{% load user_widget %}
+{% load can_view %}
+{% block title %}{% endblock %}
+{% block script %}
+<script type="text/javascript">
+	function edit_perm(object_type, object_id, perm)
+	{
+		var cachebuster = (new Date()).getTime();
+        var docHead = document.getElementsByTagName("head").item(0);
+        var scriptObj;
+        scriptObj = document.createElement("script");
+        scriptObj.setAttribute("src", "/membership/edit_perm/"+object_type+"/"+object_id+"/"+perm+"/?cb="+cachebuster);
+        docHead.appendChild(scriptObj);
+	}
+	
+	function edit_perm_callback(json)
+	{
+		var message;
+		if (json['success'])
+			message = "Setting saved: "+json['perm'];
+		else
+			message = "An error has occurred.";
+		var rand = (new Date()).getTime().toString(36)+"_"+Math.floor(Math.random()*1000000).toString(36);
+		$("#"+json['object_type']+"_perm_message_"+json['object_id']).html("<div id='"+json['object_type']+"_perm_message_"+json['object_id']+"_"+rand+"' class='edit_perm_message' style='display:none;'>"+message+"</div>")
+		$("#"+json['object_type']+"_perm_message_"+json['object_id']+"_"+rand).slideDown(600);
+		if (json['success'])
+			setTimeout("$('#"+json['object_type']+"_perm_message_"+json['object_id']+"_"+rand+"').slideUp(600);", 5000);
+	}
+</script>
+{% endblock %}
+{% block headstuff %}
+
+	<link rel="stylesheet" href="http://dev.jquery.com/view/trunk/plugins/autocomplete/jquery.autocomplete.css" type="text/css" />
+	<link href="{{STATIC_URL}}/membership/css/profile.css" rel="stylesheet" type="text/css" media="screen" />
+
+
+  <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/lib/jquery.bgiframe.min.js"></script>
+  <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/lib/jquery.dimensions.js"></script>
+  <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/jquery.autocomplete.js"></script>
+
+<script type="text/javascript" src="{{STATIC_URL}}/public_site/js/jquery_autocomplete.js"></script>
+
+
+    <style type="text/css">
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<p>Enter username to see their profile:</p>
+<form method="POST" action="">
+{{form}}
+<input type="submit" value="Show Profile" />
+</form>
+{% if u %}
+	<!--<h3>Profile for <strong class="{% ifequal u.hp_confirmed 1 %}p_hp{% else %}p_nothp{% endifequal %}">{{u.user.username}}</strong>:</h3>-->
+	<h3 style="float:left;">Profile for: &nbsp;</h3>
+	<p style="float: left; margin-top: 5px;">{{u.id|user_widget:user|safe}}</p>
+
+	<div class="clear_this"></div>
+
+	<div class="p_left_side profile_entries">
+		<h4>Journal:</h4>
+		{% ifequal user.id u.user.id %}
+			<input type="button" value="Write New Entry" onclick="document.location.href='/blog/write/'" />
+			<br />
+			<br />
+		{% endifequal %}
+		{% if blog_entries %}
+			<p>New journal entries/comments:</p>
+				{% for e in blog_entries %}
+					<p><a href="/blog/browse/{{u.id}}/{{e.id}}/">{{e.date|date:"N j, h:i A"}} - {{e.title}}</a></p>
+				{% endfor %}
+		{% endif %}
+		<br />
+		<p><a href="/blog/browse/{{u.id}}/">Browse all journal entries from <strong class="{% ifequal u.hp_confirmed 1 %}p_hp{% else %}p_nothp{% endifequal %}">{{u.user.username}}</strong></a></p>
+	</div>
+
+	<div class="p_right_side profile_goals">
+	<h4>Goals / Progress:</h4>
+	{% ifequal user.id u.user.id %}
+	<input type="button" value="Create New Goal" onclick="document.location.href='/membership/create_goal/'" />
+	<br />
+	<br />
+	{% endifequal %}
+	{% for g in goals %}
+		<div class="goal_box">
+		{% if g|can_view:user %}
+			<p style="font-size:16px;">{{ g.describe|safe }}</p>
+			<br />
+			{% ifequal user.id u.user.id %}
+				{% if g.can_edit %}
+				<input type="button" value="Edit Goal" onclick="document.location.href='/membership/edit_goal/{{g.id}}/?next='+encodeURIComponent(document.location.href);" />
+				{% endif %}
+				<input type="button" value="Update Progress" onclick="document.location.href='/membership/update_progress/{{g.id}}/'" />
+				<br />
+				<p style="font-size:10px; font-style: italic;">(editable within 2 weeks of creation)</p>
+				<br />
+			{% endifequal %}
+			<table class="goal_table">
+				<thead>
+					<tr>
+						<th>Day</th>
+						<th>Measure</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for p in g.progress_set.all %}
+					<tr>
+						<td>{{p.day|date:"N j, h:i A"}}</td>
+						<td>{{p.current_stat}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class="p_goal_stat">{{g.goal_end_date|date:"N j, h:i A"}}</td>
+						<td class="p_goal_stat">{{g.goal_unit_number}}</td>
+					</tr>
+				</tfoot>
+			</table>
+			Who can view: 
+			{% ifequal user.id u.user.id %}
+			<select onchange="edit_perm('goal', {{g.id}}, this.options[this.selectedIndex].value);">
+				<option value="Me" {% ifequal "Me" g.who_can_view %}selected="selected"{% endifequal %}>Me</option>
+				<option value="Restricted" {% ifequal "Restricted" g.who_can_view %}selected="selected"{% endifequal %}>Restricted</option>
+				<option value="Everyone" {% ifequal "Everyone" g.who_can_view %}selected="selected"{% endifequal %}>Everyone</option>
+			</select>
+			<br/>
+			<span id="goal_perm_message_{{g.id}}"></span>
+			{% else %}
+			{{ g.who_can_view }}
+			{% endifequal %}
+		{% else %}
+		You cannot view this goal.
+		{% endif %}
+		</div>
+		<br/>
+	{% endfor %}
+	</div>
+
+	<div class="p_middle">
+		<h4>Profile:</h4>
+		{% ifequal user.id u.user.id %}
+			<input type="button" value="Edit Profile" onclick="document.location.href='/membership/edit_profile/';" />
+			<br />
+			<br />
+		{% endifequal %}
+		{% if u_profile %}
+			<table class="p_table"><tbody>
+			<tr>
+				<th>First Name</th><th>Last Name</th>
+			</tr>
+			<tr>
+				<td>{{u_profile.first_name}}</td><td>{{u_profile.last_name}}</td>
+			</tr>
+			<tr>
+				<th>Gender</th><th>Location</th>
+			</tr>
+			<tr>
+				<td>{{u_profile.gender}}</td><td>{{u_profile.location}}</td>
+			</tr>
+			<tr>
+				<th>Member Since</th><th>Occupation</th>
+			</tr>
+			<tr>
+				<td>{{u_profile.member_since|date}}</td><td>{{u_profile.occupation}}</td>
+			</tr>
+			<tr>
+				<th colspan="2">Strengths:</th>
+			</tr>
+			<tr>
+				<td colspan="2">{{u_profile.strengths}}</td>
+			</tr>
+			<tr>
+				<th colspan="2">Would Like Support In:</th>
+			</tr>
+			<tr>
+				<td colspan="2">{{u_profile.want_support}}</td>
+			</tr>
+			<tr>
+				<th colspan="2">About:</th>
+			</tr>
+			<tr>
+				<td colspan="2">{{u_profile.about_me}}</td>
+			</tr>
+			<tr>
+				<th class="p_hp">Health Professional?</th><th class="p_hp">Confirmed as H.P.?</th>
+			</tr>
+			<tr>
+				<td>{{u_profile.is_hp}}</td><td>{{u_profile.hp_confirmed}}</td>
+			</tr>
+			{% ifequal u_profile.is_hp "Yes" %}
+				<tr>
+					<th class="p_hp">Job Field</th><th class="p_hp">Job Title</th>
+				</tr>
+				<tr>
+					<td>{{u_profile.job_field}}</td><td>{{u_profile.job_title}}</td>
+				</tr>
+				<tr>
+					<th colspan="2" class="p_hp">Credentials</th>
+				</tr>
+				<tr>
+					<td colspan="2">{{u_profile.credentials}}</td>
+				</tr>
+			{% endifequal %}
+			<tr>
+				<th colspan="2">Who Can View Profile:</th>
+			</tr>
+			<tr>
+				<td colspan="2">
+					{% ifequal user.id u.user.id %}
+					<select class="perm_select" onchange="edit_perm('profile', {{u.id}}, this.options[this.selectedIndex].value);">
+						<option value="Me" {% ifequal "Me" u.who_can_view %}selected="selected"{% endifequal %}>Me</option>
+						<option value="Restricted" {% ifequal "Restricted" u.who_can_view %}selected="selected"{% endifequal %}>Restricted</option>
+						<option value="Everyone" {% ifequal "Everyone" u.who_can_view %}selected="selected"{% endifequal %}>Everyone</option>
+					</select>
+					<br/>
+					<span id="profile_perm_message_{{u.id}}"></span>
+					{% else %}
+					{{ u.who_can_view }}
+					{% endifequal %}
+				</td>
+			</tr>
+			</tbody></table>
+		{% else %}
+			<p>You cannot view this user's profile.</p>
+		{% endif %}
+	</div>
+
+	<div class="clear_this"></div>
+{% endif %}
+
+{% endblock %}
+
+

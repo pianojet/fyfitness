@@ -1,0 +1,13 @@
+# Compiled Python files
+*.pyc
+
+# Virtual Env
+venv/
+*.Python
+distribute-*.tar.gz
+
+# OS files
+.DS_Store
+
+# local update script
+update.sh

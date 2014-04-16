@@ -1,0 +1,165 @@
+.p_table td
+{
+	border: 1px solid black;
+}
+
+.p_table th
+{
+	font-weight: bold;
+}
+
+.profile_goals
+{
+	width: 215px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+}
+
+.profile_entries
+{
+	width: 190px;
+	padding-bottom: 10px;	
+	padding-right: 10px;
+}
+
+.goal_box
+{
+	border: 1px solid black;
+	padding: 5px;
+	background-color: #E0E0FF;
+}
+
+.goal_box select, .goal_box input, .perm_select
+{
+	background-color: #FFFFFF;
+	border: 1px solid #6666A3;
+	margin: 2px;
+}
+
+.p_middle
+{
+
+}
+
+	.goal_table
+	{
+		border: 1px solid black;
+		width: 200px;
+	}
+
+	.goal_table thead th
+	{
+		background-color: #AAA;
+		color: #000;
+		text-align: center;
+	}
+
+
+	.goal_table tbody th
+	{
+		background-color: #AAA;
+		color: #000;
+		text-align: right;
+		width: 150px;
+	}
+
+
+	.goal_table tbody td
+	{
+		background-color: #DCFFD7;
+		color: #149500;
+	}
+	
+	.goal_table input, .goal_table select
+	{
+		background-color: #BBB;
+		color: #000;
+		width: 190px;
+	}	
+
+	.goal_table tfoot td
+	{
+		background-color: #149500;
+		color: #DCFFD7;
+	}
+
+#progress_form_div
+{
+	width: 300px;
+	
+}
+
+#progress_goal_div
+{
+	text-align: center;
+	width: 300px;
+}
+
+.create_profile_table
+{
+
+}
+.create_profile_table th
+{
+	text-align: right;
+	vertical-align: top;	
+}
+
+.create_profile_table td
+{
+	text-align: left;
+	vertical-align: top;
+}
+
+
+	.goal_form_table
+	{
+		border: 1px solid black;
+
+	}
+
+	.goal_form_table thead th
+	{
+		background-color: #AAA;
+		color: #000;
+		text-align: center;
+	}
+
+
+	.goal_form_table tbody th
+	{
+		background-color: #AAA;
+		color: #000;
+		text-align: right;
+		width: 150px;
+	}
+
+
+	.goal_form_table tbody td
+	{
+		background-color: #DCFFD7;
+		color: #149500;
+		width: 250px;
+	}
+	
+	.goal_form_table input, .goal_form_table select
+	{
+		background-color: #EEE;
+		color: #000;
+		width: 240px;
+	}	
+
+	.goal_form_table tfoot td
+	{
+		background-color: #149500;
+		color: #DCFFD7;
+	}
+
+.edit_perm_message
+{
+	background-color: #DCFFD7;
+	color: #149500;
+	border: 1px solid #149500;
+	height: 14px;
+	padding: 2px;
+}

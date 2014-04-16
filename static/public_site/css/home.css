@@ -1,0 +1,88 @@
+
+.relocate li, .large_relocate li
+{
+	font-family:georgia,garamond,serif;
+	padding: 5px 0px;
+}
+
+
+/*****************/
+.inner_box
+{
+	text-align: center;
+}
+.inner_box_head
+{
+	height: 40px;
+	width: 300px;
+	background-image: url(../images/miniboxbghead.png);
+}
+
+.inner_box_body
+{
+	width: 300px;
+	background-image: url(../images/miniboxbgbody.png);	
+}
+
+.inner_box_foot
+{
+	height: 40px;
+	width: 300px;
+	background-image: url(../images/miniboxbgfoot.png);	
+}
+
+.inner_box ul
+{
+	text-align: left;
+	
+	list-style: disc inside none;
+}
+
+.relocate
+{
+	width: 260px;
+	margin: auto;
+}
+
+/***************/
+
+.large_inner_box
+{
+	text-align: center;
+	margin: auto;
+}
+.large_inner_box_head
+{
+	height: 40px;
+	width: 600px;
+	background-image: url(../images/largeboxbghead.png);
+	margin: auto;
+}
+
+.large_inner_box_body
+{
+	width: 600px;
+	background-image: url(../images/largeboxbgbody.png);
+	margin: auto;	
+}
+
+.large_inner_box_foot
+{
+	height: 40px;
+	width: 600px;
+	background-image: url(../images/largeboxbgfoot.png);
+	margin: auto;	
+}
+
+.large_inner_box ul
+{
+	text-align: left;
+	
+	list-style: disc inside none;
+}
+
+.large_relocate
+{
+	width: 560px;
+	margin: auto;
+}

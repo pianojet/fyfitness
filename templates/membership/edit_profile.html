@@ -1,0 +1,70 @@
+{% extends "public_site/base.html" %}
+{% block title %}{% endblock %}
+{% block script %}{% endblock %}
+
+{% block headstuff %}
+	<link href="{{STATIC_URL}}/membership/css/profile.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="{{STATIC_URL}}/membership/css/profileform.css" rel="stylesheet" type="text/css" media="screen" />
+
+{% endblock %}
+{% block content %}
+
+<h3>Editing Profile:</h3>
+<form method="POST" action="">
+<table><tbody>
+	<tr>
+		<th class="right_align">Username</th><td class="left_align">{{user.username}}</td><th class="right_align">Email</th><td class="left_align">{{form.email.errors}}{{form.email}}</td>
+	</tr>
+	<tr>
+		<th class="right_align">Location</th><td class="left_align">{{form.location.errors}}{{form.location}}</td><th class="right_align">Occupation</th><td class="left_align">{{form.occupation.errors}}{{form.occupation}}</td>
+	</tr>
+	<tr>
+		<th colspan="4">Strengths</th>
+	</tr>
+	<tr>
+		<td colspan="4">{{form.strengths.errors}}{{form.strengths}}</td>
+	</tr>
+	<tr>
+		<th colspan="4">Request Support With</th>
+	</tr>
+	<tr>
+		<td colspan="4">{{form.want_support.errors}}{{form.want_support}}</td>
+	</tr>
+	<tr>
+		<th colspan="4">About Me</th>
+	</tr>
+	<tr>
+		<td colspan="4">{{form.about_me.errors}}{{form.about_me}}</td>
+	</tr>
+	<tr>
+		<th class="right_align" colspan="2">Who Can View Profile</th><td class="left_align" colspan="2">{{form.who_can_view_profile.errors}}{{form.who_can_view_profile}}</td>
+	</tr>
+	<tr>
+		<th class="right_align" colspan="2">Do you accept Terms and Conditions?</th><td class="left_align" colspan="2">{{form.i_accept_terms_and_conditions.errors}}{{form.i_accept_terms_and_conditions}}</td>
+	</tr>
+	<tr>
+		<th colspan="2" class="right_align">Health Professional?</th><td colspan="2" class="left_align">{{form.i_am_a_health_professional.errors}}{{form.i_am_a_health_professional}}</td>
+	</tr>
+	{% ifequal me.i_am_a_health_professional 1 %}
+		<tr>
+			<th colspan="2" class="right_align">Job Field</th><td colspan="2" class="left_align">{{form.job_field.errors}}{{form.job_field}}</td>
+		</tr>
+		<tr>
+			<th colspan="2" class="right_align">Job Title</th><td colspan="2" class="left_align">{{form.job_title.errors}}{{form.job_title}}</td>
+		</tr>
+		<tr>
+			<th colspan="4">Credentials</th>
+		</tr>
+		<tr>
+			<td colspan="4">{{form.credentials.errors}}{{form.credentials}}</td>
+		</tr>
+	{% endifequal %}
+
+	<tr><td colspan="4" class="submit"><input type="submit"/></td></tr>
+
+</tbody></table>
+</form>
+
+{% endblock %}
+
+

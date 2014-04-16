@@ -1,0 +1,122 @@
+{% extends "public_site/base.html" %}
+{% block title %}{% endblock %}
+{% block script %}{% endblock %}
+
+{% block headstuff %}
+
+	<link rel="stylesheet" href="http://dev.jquery.com/view/trunk/plugins/autocomplete/jquery.autocomplete.css" type="text/css" />
+	<link href="{{STATIC_URL}}/membership/css/profile.css" rel="stylesheet" type="text/css" media="screen" />
+
+  <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/lib/jquery.bgiframe.min.js"></script>
+  <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/lib/jquery.dimensions.js"></script>
+  <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/jquery.autocomplete.js"></script>
+
+<script type="text/javascript" src="{{STATIC_URL}}/public_site/js/jquery_autocomplete.js"></script>
+
+
+    <style type="text/css">
+
+    </style>
+{% endblock %}
+
+
+{% block helpdiv %}
+<div id="helpButton" class="my-ui-corner-all">Help...</div>
+<div id="helpDiv" class="my-ui-corner-all">
+	<p>You are looking at two different lists of users that exist on this site.</p>
+	<ul>
+		<li>The left list is a list of "Authorized" users, and shows users who you have selected to be able to see your goals and journal entries that you have designated as "Restricted."</li>
+		<br />
+		<li>The right list is a list of "Follow" users, and shows a list of users that you have chosen to keep track of.  That is, whenever they write a new journal post or somebody comments on a journal post of theirs, you will be notified.</li>
+	</ul>
+</div>
+<div class="clear_this"></div>
+{% endblock %}
+
+
+{% block content %}
+
+<table><tbody>
+<tr>
+	<td><h4>Authorize</h4></td><td><h4>Follow</h4></td>
+</tr>
+<tr>
+	<td>
+
+		{% if all_my_auth %}
+			<table class="goal_table">
+				<thead>
+					<tr><th>Authorized</th><th>Remove</th></tr>
+				<tbody>
+					{% for f in all_my_auth %}
+					<tr>
+						<td><a href="/membership/show_profile/{{f.user.id}}/"><strong class="{% ifequal f.hp_confirmed 1 %}p_hp{% else %}p_nothp{% endifequal %}">{{f.user.username}}</strong></a></td>
+						<td><a class="x_remove" href="/membership/follow/remove_auth/{{f.id}}/">X</a></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>Nobody is authorized to view your restricted content.</p>
+		{% endif %}
+
+		<form action="/membership/follow/auth/" method="POST">
+		<table><tbody>
+		{{ authForm }}
+		<tr>
+			<td colspan="2"><p style="font-size: 10px"><em>case-sensitive</em></p></td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="submit" /></td>
+		</tr>
+		</tbody></table>
+		</form>
+	</td>
+	<td style="border-left: 1px solid black;">
+		{% if all_my_foll %}
+			<table class="goal_table">
+				<thead>
+					<tr><th>Following</th><th>Remove</th></tr>
+				<tbody>
+					{% for f in all_my_foll %}
+					<tr>
+						<td><a href="/membership/show_profile/{{f.user.id}}/"><strong class="{% ifequal f.hp_confirmed 1 %}p_hp{% else %}p_nothp{% endifequal %}">{{f.user.username}}</strong></a></td>
+						<td><a class="x_remove" href="/membership/follow/remove_foll/{{f.id}}/">X</a></td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<p>You are not following anybody.</p>
+		{% endif %}
+
+		<form action="/membership/follow/follow/" method="POST">
+		<table><tbody>
+		{{ follForm }}
+		<tr>
+			<td colspan="2"><p style="font-size: 10px"><em>case-sensitive</em></p></td>
+		</tr>
+		<tr>
+			<td colspan="2"><input type="submit" /></td>
+		</tr>
+		</tbody></table>
+		</form>
+	</td>
+</tr>
+</tbody></table>
+<!--
+<form action="" method="POST">
+<table><tbody>
+<tr>
+	<td>Add a friend:</td><td><input name="addfriend" type="text" /></td>
+</tr>
+<tr>
+	<td colspan="2"><input type="submit" /></td>
+</tr>
+</tbody></table>
+</form>
+-->
+
+{% endblock %}
+
+

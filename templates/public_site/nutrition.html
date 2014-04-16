@@ -1,0 +1,21 @@
+{% extends "public_site/base.html" %}
+{% block title %}{% endblock %}
+{% block script %}{% endblock %}
+
+{% block headstuff %}
+	<link href="{{STATIC_URL}}/public_site/css/home.css" rel="stylesheet" type="text/css" media="screen" />
+{% endblock %}
+
+{% block content %}
+
+<h3>Nutrition</h3>
+<iframe src="http://www.nutritiondata.com/widget/basic-search" frameborder="0" scrolling="no"
+	width="245" height="360">
+Your browser does not support inline frames or is currently configured not to display inline frames.
+</iframe>
+{% endblock %}
+
+
+{% block rightbar %}
+{% endblock %}
+

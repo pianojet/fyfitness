@@ -1,0 +1,194 @@
+{% extends "public_site/base.html" %}
+{% load get_total_entry_num %}
+{% load user_widget %}
+{% block title %}{% endblock %}
+{% block script %}
+<script type="text/javascript">
+window.authCallbackOld = window.authCallback;
+window.followCallbackOld = window.followCallback;
+window.authCallback = function(mData){
+	window.authCallbackOld(mData);
+	if (mData['src'] != "failure")
+	{
+		$("#authorized_"+mData['member_id']).html('<a href="/membership/follow/">'+(mData['onclick'] == 'sub' ? "Yes" : "No")+'</a>');
+	}
+}
+window.followCallback = function(mData){
+	window.followCallbackOld(mData);
+	if (mData['src'] != "failure")
+	{
+		$("#following_"+mData['member_id']).html('<a href="/membership/follow/">'+(mData['onclick'] == 'sub' ? "Yes" : "No")+'</a>');
+	}
+}
+</script>
+{% endblock %}
+
+{% block headstuff %}
+	<link href="{{STATIC_URL}}/blog/css/blog.css" rel="stylesheet" type="text/css" media="screen" />
+{% endblock %}
+
+{% block helpdiv %}
+<div id="helpButton" class="my-ui-corner-all">Help...</div>
+<div id="helpDiv" class="my-ui-corner-all">
+	<p>Feel free to browse among journal entries of other FYF members.</p>
+	<p>If you are following any other members of the community, updates to their journal (including new entries or comments on their entries) will be posted below.</p>
+	<p>Journal entries that are listed as "updated" means that it is either a new entry, or new comments have been added to it.</p>
+</div>
+<div class="clear_this"></div>
+{% endblock %}
+
+
+{% block content %}
+
+{% if entry_id %}
+<table class="entry_table">
+	<thead>
+		<tr>
+			<th>
+				<p>{{m.id|user_widget:user|safe}}'s entry on {{entry.date|date:"N j, h:m"}}</p>
+			</th>
+		</tr>
+		<tr>
+			<th>
+				<p class="p_left_side">Title: {{entry.title}}</p>{% ifequal entry.do_you_want_feedback 1 %}<p class="p_right_side">Feedback requested.&nbsp;&nbsp;<a href="/blog/comment/{{entry.id}}/">Write Comment</a></p>{% endifequal %}
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% if entry %}
+		<tr>
+			<td>
+				<p>{{entry.text|linebreaksbr}}</p>
+			</td>
+		</tr>
+	{% else %}
+		<tr>
+			<td>
+				<p>This entry has been restricted for viewing.</p>
+			</td>
+		</tr>
+	{% endif %}
+	</tbody>
+
+</table>
+
+		{% if member_id %}<p><a href="/blog/browse/{{member_id}}/">Back to Entry List</a></p>{% endif %}
+			<br /><br />
+
+		<div class="p_right_side">
+			<p>Comments:</p>
+			{% if existing_comments %}
+				<table class="comment_table">
+				<tbody>
+				{% for c in existing_comments %}
+					<tr>
+						<th>
+							From {{c.from_member.id|user_widget:user|safe}} on {{c.date|date:"N j, h:i A"}}
+						</th>
+					</tr>
+					<tr>
+						<td>{{c.text}}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+				</table>
+			{% else %}
+			<p><em>No comments have been made</em></p>
+			{% endif %}
+		</div>
+		<div class="p_left_side">
+			{% if form %}
+			<form method="POST" action="">
+				<table class="comment_form_table"><tbody>
+					{{form}}
+				<tr><td colspan="2" class="submit"><input type="submit" value="Submit Comment" /></td></tr>
+				</tbody></table>
+			</form>
+			{% else %}
+				<p><a href="/blog/comment/{{entry.id}}/">Add Comment</a></p>
+			{% endif %}
+		</div>
+
+
+
+
+
+
+{% else %}
+<h2>Browse Members:</h2>
+	{% if new_posts %}
+	<h5>There are post updates from users you follow:</h5>
+		{{ follow_post_table|safe }}
+	{% endif %}
+<br />
+{% if member_id %}
+	<p>Entries for {{m.id|user_widget:user|safe}}:</p>
+	<table class="browse_table sortable">
+		<thead>
+			<tr>
+				<th>Title</th><th>Date</th><th>Wants Feedback</th>{% for a in all_my_foll %}{% ifequal m a %}<th>Update</th>{% endifequal %}{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+		{% if member_entries %}
+			{% for e in member_entries %}
+				<tr>
+					<td><a href="/blog/browse/{{m.id}}/{{e.id}}">{{ e.title }}</a></td>
+					<td><a href="/blog/browse/{{m.id}}/{{e.id}}">{{ e.date|date:"N j, h:i A"}}</a></td>
+					<td><a href="/blog/browse/{{m.id}}/{{e.id}}">{% ifequal e.do_you_want_feedback 1 %}Yes{% endifequal %}</a></td>
+
+					{% for a in all_my_foll %}{% ifequal m a %}<td>{% for p in new_posts %}{% ifequal e p %}updated{% endifequal %}{% endfor %}{% endifequal %}</td>{% endfor %}
+				</tr>
+			{% endfor %}
+		{% else %}
+				<tr>
+					<td colspan="3"><p>No authorized entries.</p></td>
+				</tr>
+		{% endif %}
+		</tbody>
+	</table>
+
+{% else %}
+
+
+				<table class="browse_table sortable p_left_side" style="width: 630px;">
+				<thead>
+					<tr>
+						<th>Member</th>
+						<th>Authorized?</th>
+						<th>Following?</th>
+						<th>Journal<br/>Entries</th>
+						<th>Visible<br/>Entries</th>
+						<th>Current<br/>Goals</th>
+						<th>Visible<br/>Goals</th>
+						<th>Profile<br/>Visibility</th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for a in all_members %}
+				<tr>
+					<td style="text-align: right;">{{a.id|user_widget:user|safe}}</td>
+					<td id="authorized_{{a.id}}"><a href="/membership/follow/">{{user|has_authorized:a.user|yesno|capfirst}}</a></td>
+					<td id="following_{{a.id}}"><a href="/membership/follow/">{{user|is_following:a.user|yesno|capfirst}}</a></td>
+					<td><a href="/blog/browse/{{a.id}}/">{{a.id|get_total_entry_num}}</a></td>
+					<td><a href="/blog/browse/{{a.id}}/">{{a.id|get_visible_entry_num:user}}</a></td>
+					<td><a href="/membership/show_profile/{{a.id}}/">{{a.goal_set.all.count}}</a></td>
+					<td><a href="/membership/show_profile/{{a.id}}/">{{a.id|get_visible_goal_num:user}}</a></td>
+					<td><a href="/membership/show_profile/{{a.id}}/">{{a.who_can_view}}</a></td>
+				</tr>
+				{% endfor %}
+				</tbody>
+				</table>
+
+<div class="clear_this"></div>
+
+{% endif %}
+
+{% endif %}
+
+
+
+
+{% endblock %}
+
+

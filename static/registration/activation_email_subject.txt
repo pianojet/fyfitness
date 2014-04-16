@@ -1,0 +1,1 @@
+Find Your Fitness: click within {{ expiration_days }} days!
