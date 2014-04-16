@@ -31,6 +31,7 @@ PROJECT_APPS = (
     'blog',
     'message',
     'calendar',
+    'autocomplete',
 )
 
 INSTALLED_APPS = (
