@@ -9,6 +9,7 @@
 
 <form method="POST" action="">
 <table>
+{% csrf_token %}
 {{ form }}
 
 <tr><td colspan="2" class="submit"><input type="submit"/></td></tr>

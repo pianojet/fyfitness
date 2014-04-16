@@ -2,10 +2,10 @@ from utils import words_avoided
 from django.db import models
 from django import forms
 from django.contrib.auth.models import User
-from django.forms import ModelForm
+from django.forms import ModelForm, ModelChoiceField
 
 from autocomplete.widgets import AutoCompleteWidget
-from autocomplete.fields import ModelChoiceField
+#from autocomplete.fields import ModelChoiceField
 
 from membership.models import Member
 

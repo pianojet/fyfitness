@@ -59,6 +59,7 @@
 	<tr>
 		<th class="right_align" colspan="2">Do you accept <a style="text-decoration: underline;" href="{{STATIC_URL}}/documents/fyf.pdf" target="_blank">Terms and Conditions</a>?</th><td class="left_align" colspan="2">{{form.i_accept_terms_and_conditions.errors}}{{form.i_accept_terms_and_conditions}}</td>
 	</tr>
+	{% csrf_token %}
 	<tr><td colspan="4" class="submit"><input type="submit"/></td></tr>
 
 </tbody></table>

@@ -1,6 +1,7 @@
+import json
+
 from django.http import HttpResponse
 from django.db.models import Q
-from django.utils import simplejson
 from django.utils.encoding import smart_unicode
 
 
@@ -34,7 +35,7 @@ class AutoComplete(object):
             result = []
             for obj in qs:
                 result.append((getattr(obj, key), label(obj)))
-        return HttpResponse(simplejson.dumps(result),
+        return HttpResponse(json.dumps(result),
                 mimetype='application/json')
 
     def register(self, id, queryset, fields, limit=None, key='pk', label=lambda obj: smart_unicode(obj), auth=False):

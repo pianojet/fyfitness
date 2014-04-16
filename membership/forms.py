@@ -1,12 +1,12 @@
 from django import forms
 from django.db import models
-from django.contrib.auth.models import User, Message
+from django.contrib.auth.models import User
 
 from autocomplete.widgets import AutoCompleteWidget
-from autocomplete.fields import ModelChoiceField
 
-from django.forms import ModelForm, TypedChoiceField
+from django.forms import ModelForm, TypedChoiceField, ModelChoiceField
 from membership.models import Member, HealthProfessional, Progress, Goal
+from message.models import Message
 
 FIELD_CHOICES = (
 	('Health Administration / Office Support', 'Health Administration / Office Support'),
@@ -114,12 +114,12 @@ class GoalForm(ModelForm):
 		model = Goal
 		exclude = ['goal_start_date', 'goal_end_date', 'member']
 	
-	primary_goal = TypedChoiceField(choices=[("1", "Yes"), ("0", "No")], coerce=bool, help_text="You must have a primary goal to use the website, and you can only have 1 primary goal.")
+	primary_goal = TypedChoiceField(choices=[(True, "Yes"), (False, "No")], coerce=bool, help_text="You must have a primary goal to use the website, and you can only have 1 primary goal.")
 	
-	def clean_primary_goal(self):
-		if self.data['primary_goal'] == "0":
-			return False
-		return True
+	# def clean_primary_goal(self):
+	# 	if self.data['primary_goal'] == "0":
+	# 		return False
+	# 	return True
 	
 	def clean(self):
 		cleaned_data = self.cleaned_data

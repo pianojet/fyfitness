@@ -1,5 +1,5 @@
-from django.conf.urls.defaults import *
-from django.views.generic.simple import direct_to_template
+from django.conf.urls import patterns, include, url
+#from django.views.generic.simple import direct_to_template
 
 #from registration.views import activate
 #from registration.views import register
@@ -18,12 +18,12 @@ urlpatterns = patterns('blog.views',
 
 	# Uncomment the next line to enable the admin:
 	# (r'^admin/', include(admin.site.urls)),
-	(r'^write/$', 'write'),
-	(r'^browse/$', 'browse'),
-	(r'^browse/(?P<member_id>\d+)/$', 'browse'),
-	(r'^browse/(?P<member_id>\d+)/(?P<entry_id>\d+)/$', 'browse'),
+	url(r'^write/$', 'write'),
+	url(r'^browse/$', 'browse'),
+	url(r'^browse/(?P<member_id>\d+)/$', 'browse'),
+	url(r'^browse/(?P<member_id>\d+)/(?P<entry_id>\d+)/$', 'browse'),
 	
-	(r'^comment/(?P<entry_id>\w+)/$', 'comment'),
+	url(r'^comment/(?P<entry_id>\w+)/$', 'comment'),
 #	(r'^aboutus/$', 'aboutus'),
 #	(r'^nutrition/$', 'nutrition'),
 #	(r'^exercise/$', 'exercise'),

@@ -8,6 +8,7 @@
 <p>Log in:</p>
 <form method="POST" action="">
 <table>
+{% csrf_token %}
 {{ form }}
 <tr><td class="submit"><input type="submit"/></td><td><a style="font-size: 14px;" href="/accounts/register/">Register</a></td></tr>
 </table>

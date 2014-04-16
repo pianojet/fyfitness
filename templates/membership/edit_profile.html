@@ -59,7 +59,7 @@
 			<td colspan="4">{{form.credentials.errors}}{{form.credentials}}</td>
 		</tr>
 	{% endifequal %}
-
+	{% csrf_token %}
 	<tr><td colspan="4" class="submit"><input type="submit"/></td></tr>
 
 </tbody></table>

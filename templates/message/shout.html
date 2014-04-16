@@ -20,6 +20,7 @@
 {% block content %}
 
 <form method="POST" action="">
+	{% csrf_token %}
 	<table>
 		<tbody>
 			<tr>

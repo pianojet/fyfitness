@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, include, url
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -14,13 +14,13 @@ urlpatterns = patterns('public_site.views',
 
     # Uncomment the next line to enable the admin:
     # (r'^admin/', include(admin.site.urls)),
-        (r'^$', 'home'),
-	(r'^news/$', 'news'),
-	(r'^aboutus/$', 'aboutus'),
-	(r'^nutrition/$', 'nutrition'),
-	(r'^exercise/$', 'exercise'),
-	(r'^hp/$', 'hp'),
-	(r'^faq/$', 'faq'),
+        url(r'^$', 'home'),
+        url(r'^news/$', 'news'),
+	    url(r'^aboutus/$', 'aboutus'),
+	url(r'^nutrition/$', 'nutrition'),
+	url(r'^exercise/$', 'exercise'),
+	url(r'^hp/$', 'hp'),
+	url(r'^faq/$', 'faq'),
 	
 #        (r'^what_is_expressive_therapy/$', 'whatis'),
 #        (r'^services/$', 'services'),

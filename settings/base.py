@@ -1,8 +1,8 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-PROJECT_PATH = os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = os.path.dirname(__file__))
+PROJECT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(__file__)
 
 
 # Quick-start development settings - unsuitable for production
@@ -18,7 +18,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = "/"
 LOGIN_EXEMPT_URLS = (
     '/robots.txt$',  # Only applicable to development (DEBUG)
 )
@@ -101,7 +100,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 STATIC_ROOT = os.path.join(os.path.dirname(PROJECT_PATH), 'media', 'static')
@@ -120,3 +119,11 @@ STATICFILES_FINDERS = (
     #'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+ACCOUNT_ACTIVATION_DAYS = 7
+
+#ROOT_SITE_URL = 'http://fyfitness.com/'
+ROOT_SITE_URL = 'http://solicon.me:3000/'
+
+LOGIN_REDIRECT_URL = '/membership/home/'
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'

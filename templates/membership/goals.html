@@ -80,6 +80,7 @@ $(function() {
 <br />
 <form action="" method="POST">
 <table class="goal_form_table"><tbody>
+{% csrf_token %}
 {{ form }}
 </tbody></table><br/>
 <input type="submit" name="submit_type" value="Save and continue" /> &nbsp;

@@ -8,6 +8,7 @@
 <p>You must accept the <a style="font-weight: bold; text-decoration: underline;" href="{{STATIC_URL}}/documents/fyf.pdf">terms and conditions</a> in order to utilize this website.</p>
 <form method="POST" action="">
 <table>
+{% csrf_token %}    
 {{ form }}
 <tr><td colspan="2" class="submit"><input type="submit"/></td></tr>
 </table>

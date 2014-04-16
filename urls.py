@@ -1,12 +1,12 @@
-from django.conf.urls.defaults import *
+#from django.conf.urls.defaults import *
 from django.contrib import admin
 from django.contrib.auth.models import User
+from django.conf.urls import patterns, include, url
 
 from autocomplete.views import autocomplete
+from django.views.generic import RedirectView
 
 admin.autodiscover()
-
-
 
 autocomplete.register(
     id = 'user',
@@ -41,39 +41,39 @@ urlpatterns = patterns('',
 	# Uncomment the next line to enable the admin:
 	url(r'^autocomplete/(\w+)/$', autocomplete, name='autocomplete'),
 	
-	(r'^admin/', include(admin.site.urls)),
-	(r'^$', 'django.views.generic.simple.redirect_to', {'url': '/public_site/'}),
-	(r'', include('registration.auth_urls')), 
+	url(r'^admin/', include(admin.site.urls)),
+	url(r'^$', RedirectView.as_view(url='/public_site')),
+	url(r'', include('registration.auth_urls')), 
 )
 
 urlpatterns += patterns('',
 
-	(r'^public_site/', include('fyfitness.public_site.urls')),
+	url(r'^public_site/', include('public_site.urls')),
 		
 )
 
 urlpatterns += patterns('',
 
-	(r'^accounts/', include('registration.backends.default.urls')),
+	url(r'^accounts/', include('registration.backends.default.urls')),
 )
 
 
 urlpatterns += patterns('',
 
-	(r'^membership/', include('membership.urls')),		
+	url(r'^membership/', include('membership.urls')),		
 )
 
 urlpatterns += patterns('',
 
-	(r'^blog/', include('blog.urls')),		
+	url(r'^blog/', include('blog.urls')),		
 )
 
 urlpatterns += patterns('',
 
-	(r'^message/', include('message.urls')),		
+	url(r'^message/', include('message.urls')),		
 )
 
 urlpatterns += patterns('',
 
-	(r'^calendar/', include('calendar.urls')),		
+	url(r'^calendar/', include('calendar.urls')),		
 )

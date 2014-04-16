@@ -2,5 +2,5 @@ Find Your Fitness activation:
 
 Please visit or click the following web address to activate your account:
 
-http://fyfitness.com/accounts/activate/{{activation_key}}/
+http://{{ site }}/accounts/activate/{{activation_key}}/
 

@@ -24,10 +24,12 @@ sudo ln -s /opt/git/fyfitness/conf/apache/vhost.development.conf /etc/apache2/si
 sudo a2ensite fyfitness_development
 
 #<run mysql client>
-> CREATE USER 'fyfitness'@'localhost' IDENTIFIED BY 'pass123';
-> GRANT ALL PRIVILEGES ON * . * TO 'fyfitness'@'localhost';
-> FLUSH PRIVILEGES;
-> create database fyfitness;
+>>>
+CREATE USER 'fyfitness'@'localhost' IDENTIFIED BY 'pass123';
+GRANT ALL PRIVILEGES ON * . * TO 'fyfitness'@'localhost';
+FLUSH PRIVILEGES;
+create database fyfitness;
+<<<
 
 ./manage.py syncdb
 

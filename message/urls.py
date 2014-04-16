@@ -1,5 +1,5 @@
-from django.conf.urls.defaults import *
-from django.views.generic.simple import direct_to_template
+from django.conf.urls import patterns, include, url
+#from django.views.generic.simple import direct_to_template
 
 #from registration.views import activate
 #from registration.views import register
@@ -18,13 +18,13 @@ urlpatterns = patterns('message.views',
 
 	# Uncomment the next line to enable the admin:
 	# (r'^admin/', include(admin.site.urls)),
-	(r'^shoutout/$', 'shoutout'),
-	(r'^get_shouts/$', 'get_shouts'),
-	(r'^write/$', 'write'),
-	(r'^write/(?P<mem_id>\w+)/$', 'write'),	
-	(r'^write/(?P<msg_id>\w+)/(?P<mem_id>\w+)/$', 'write'),	
-	(r'^browse/$', 'browse'),
-	(r'^browse/(?P<message_id>\d+)/$', 'browse'),
+	url(r'^shoutout/$', 'shoutout'),
+	url(r'^get_shouts/$', 'get_shouts'),
+	url(r'^write/$', 'write'),
+	url(r'^write/(?P<mem_id>\w+)/$', 'write'),	
+	url(r'^write/(?P<msg_id>\w+)/(?P<mem_id>\w+)/$', 'write'),	
+	url(r'^browse/$', 'browse'),
+	url(r'^browse/(?P<message_id>\d+)/$', 'browse'),
 #	(r'^aboutus/$', 'aboutus'),
 #	(r'^nutrition/$', 'nutrition'),
 #	(r'^exercise/$', 'exercise'),

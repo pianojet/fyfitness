@@ -12,7 +12,10 @@ register = template.Library()
 @register.filter
 def user_widget(member_id, arg):
 
-	me_f = Member.objects.filter(user=arg)
+	try:
+		me_f = Member.objects.filter(user=arg)
+	except:
+		me_f = []
 	member = Member.objects.filter(id=member_id)[0]
 	hpclass = "p_nothp" if not(member.hp_confirmed) else "p_hp"
 	if len(me_f) > 0:
