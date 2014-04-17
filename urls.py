@@ -1,4 +1,4 @@
-#from django.conf.urls.defaults import *
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.conf.urls import patterns, include, url
@@ -77,3 +77,9 @@ urlpatterns += patterns('',
 
 	url(r'^calendar/', include('calendar.urls')),		
 )
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns += patterns('',
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    )

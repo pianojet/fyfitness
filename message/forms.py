@@ -5,11 +5,12 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm, ModelChoiceField
 
 from autocomplete.widgets import AutoCompleteWidget
-#from autocomplete.fields import ModelChoiceField
+from autocomplete.fields import AutoCompleteField
 
 from membership.models import Member
 
 from message.models import Shout, Message
+
 
 class ShoutForm(forms.Form):
 	text = forms.CharField(max_length=50)
@@ -30,7 +31,7 @@ class MessageForm(ModelForm):
 		model = Message
 		exclude = ['from_member', 'send_date', 'read_date']
 		
-	to_member = ModelChoiceField('user', label="To:")
+	to_member = AutoCompleteField('user', label="To:")
 
 	def clean_to_member(self):
 		user = self.cleaned_data.get('to_member', '')

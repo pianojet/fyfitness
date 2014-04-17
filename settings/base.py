@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'south',  # Database migration package # http://south.aeracode.org/
 ) + PROJECT_APPS
 
@@ -102,6 +103,7 @@ USE_L10N = True
 
 USE_TZ = False
 
+SHELL_PLUS = "ipython"
 
 STATIC_ROOT = os.path.join(os.path.dirname(PROJECT_PATH), 'media', 'static')
 STATIC_URL = '/static/'

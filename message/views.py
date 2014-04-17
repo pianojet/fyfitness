@@ -77,10 +77,10 @@ def write(request, msg_id=None, mem_id=None):
 		if (msg_id and mem_id):
 			msg_reply = Message.objects.get(id=msg_id)
 			mem_reply = Member.objects.get(id=mem_id)
-			form = MessageForm(initial={'title':"RE:%s"%(msg_reply.title), 'to_member':mem_reply.user.id})
+			form = MessageForm(initial={'title':"RE:%s"%(msg_reply.title), 'to_member':mem_reply.user})
 		elif (mem_id):
 			mem_reply = Member.objects.get(id=mem_id)
-			form = MessageForm(initial={'to_member':mem_reply.user.id})
+			form = MessageForm(initial={'to_member':mem_reply.user})
 		else:
 			form = MessageForm()
 	

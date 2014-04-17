@@ -5,20 +5,20 @@
 {% block headstuff %}
 
 	<!--<link rel="stylesheet" href="http://dev.jquery.com/view/trunk/plugins/autocomplete/jquery.autocomplete.css" type="text/css" />-->
-	<link rel="stylesheet" href="http://jquery.bassistance.de/autocomplete/jquery.autocomplete.css" type="text/css" />
-
-
+	<link rel="stylesheet" href="{{STATIC_URL}}/autocomplete/css/jquery.autocomplete.css" type="text/css" />
+	<!-- <script type="text/javascript" src="{{STATIC_URL}}/public_site/js/yui2-api.min.js"></script> -->
+	<!-- <script type="text/javascript" src="{{STATIC_URL}}/autocomplete/js/autocomplete.js"></script> -->
+	<!-- <script type="text/javascript" src="{{STATIC_URL}}/autocomplete/js/jquery.autocomplete.min.js"></script> -->
+	<!-- <script type="text/javascript" src="{{STATIC_URL}}/public_site/js/yui_autocomplete.js"></script> -->
 
 	<link href="{{STATIC_URL}}/blog/css/blog.css" rel="stylesheet" type="text/css" media="screen" />
 
-  <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/lib/jquery.bgiframe.min.js"></script>
-  <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/lib/jquery.dimensions.js"></script>
-  <!--<script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/jquery.autocomplete.js"></script>-->
-
-  <script type="text/javascript" src="http://jquery.bassistance.de/autocomplete/jquery.autocomplete.js"></script>
+<!--  <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/lib/jquery.bgiframe.min.js"></script>
+  <script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/lib/jquery.dimensions.js"></script> -->
 
 
-<script type="text/javascript" src="{{STATIC_URL}}/public_site/js/jquery_autocomplete.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}/autocomplete/js/jquery.autocomplete.min.js"></script>
+  <script type="text/javascript" src="{{STATIC_URL}}/public_site/js/jquery_autocomplete.js"></script>
 
 
 {% endblock %}
@@ -38,15 +38,15 @@
 	<table class="entry_table">
 		<thead>
 			<tr>
-				<th>New Message</th><th rowspan="2"><span class="p_right_side">Who are you writing to?{{form.data.to_member}}{{form.data.to_member.errors}}<p style="font-size: 10px"><em>case-sensitive</em></p></span></th>
+				<th>New Message</th><th rowspan="2"><span class="p_right_side">Who are you writing to?{{form.to_member}}{{form.to_member.errors}}<p style="font-size: 10px"><em>case-sensitive</em></p></span></th>
 			</tr>
 			<tr>
-				<th colspan="2">Title: {{form.data.title}}{{form.data.title.error}}</th>
+				<th colspan="2">Title: {{form.title}}{{form.title.error}}</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td colspan="2">{{form.data.text.error}}{{form.data.text}}</td>
+				<td colspan="2">{{form.text.error}}{{form.text}}</td>
 			</tr>
 		</tbody>
 	</table>

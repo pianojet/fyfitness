@@ -4,7 +4,6 @@ from django.core.urlresolvers import reverse
 from django.utils.encoding import force_unicode
 from django.forms.util import flatatt
 
-
 # FIXME not ready for admin edit page, need ac_id_%(name)s prefill (2 line of js).
 
 AC_TEMPLATE = u'''
@@ -38,7 +37,8 @@ class AutoCompleteWidget(widgets.Widget):
         self.view_name = view_name
         self.force_selection = force_selection
     
-    def render(self, name, value, attrs=None, choices=()):
+    def render(self, name, value, attrs=None, choices=(), *args, **kwargs):
+        import ipdb;ipdb.set_trace()
         #input = super(AutoComplete, self).render(name, value, attrs)
         url = reverse(self.view_name, args=[self.ac_name])
         force_selection = ['false', 'true'][self.force_selection]
