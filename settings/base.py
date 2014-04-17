@@ -4,7 +4,6 @@ import os
 PROJECT_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(__file__)
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -105,7 +104,7 @@ USE_TZ = False
 
 SHELL_PLUS = "ipython"
 
-STATIC_ROOT = os.path.join(os.path.dirname(PROJECT_PATH), 'media', 'static')
+STATIC_ROOT = os.path.join(PROJECT_PATH, 'media', 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
