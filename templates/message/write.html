@@ -38,15 +38,15 @@
 	<table class="entry_table">
 		<thead>
 			<tr>
-				<th>New Message</th><th rowspan="2"><span class="p_right_side">Who are you writing to?{{form.to_member}}{{form.to_member.errors}}<p style="font-size: 10px"><em>case-sensitive</em></p></span></th>
+				<th>New Message</th><th rowspan="2"><span class="p_right_side">Who are you writing to?{{form.data.to_member}}{{form.data.to_member.errors}}<p style="font-size: 10px"><em>case-sensitive</em></p></span></th>
 			</tr>
 			<tr>
-				<th colspan="2">Title: {{form.title}}{{form.title.error}}</th>
+				<th colspan="2">Title: {{form.data.title}}{{form.data.title.error}}</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td colspan="2">{{form.text.error}}{{form.text}}</td>
+				<td colspan="2">{{form.data.text.error}}{{form.data.text}}</td>
 			</tr>
 		</tbody>
 	</table>
