@@ -12,9 +12,9 @@ BASE_DIR = os.path.dirname(__file__)
 SECRET_KEY = 'v8fu^_h^kr0#2n#klwgi0=($qu3$(e-9rdv490b*s9igl$q!+!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -124,7 +124,7 @@ STATICFILES_FINDERS = (
 ACCOUNT_ACTIVATION_DAYS = 7
 
 #ROOT_SITE_URL = 'http://fyfitness.com/'
-ROOT_SITE_URL = 'http://solicon.me:3000/'
+ROOT_SITE_URL = 'http://fyf.justinerictaylor.com/'
 
 LOGIN_REDIRECT_URL = '/membership/home/'
 LOGIN_URL = '/login/'

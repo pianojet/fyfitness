@@ -25,10 +25,10 @@ sudo a2ensite fyfitness_development
 
 #<run mysql client>
 >>>
-CREATE USER 'fyfitness'@'localhost' IDENTIFIED BY 'pass123';
-GRANT ALL PRIVILEGES ON * . * TO 'fyfitness'@'localhost';
+CREATE USER 'fyfitnessdev'@'localhost' IDENTIFIED BY 'pass123';
+GRANT ALL PRIVILEGES ON * . * TO 'fyfitnessdev'@'localhost';
 FLUSH PRIVILEGES;
-create database fyfitness;
+create database fyfitnessdev;
 <<<
 
 ./manage.py syncdb

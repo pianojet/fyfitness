@@ -1,5 +1,23 @@
 from base import *  # noqa
 
+DEBUG = True
+
+TEMPLATE_DEBUG = True
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'fyfitnessdev',
+        'USER': 'fyfitnessdev',
+        'PASSWORD': 'pass123',
+        'HOST': '',
+        'PORT': '',
+        'STORAGE_ENGINE': 'InnoDB',
+    },
+}
+
+ROOT_SITE_URL = 'http://dev.justinerictaylor.com/'
+
 # debug toolbar
 INSTALLED_APPS += (
     'debug_toolbar',
